@@ -1,0 +1,306 @@
+#--- Phrases
+[andXMore] # e.g. "...and 3 more [pages in this category]"
+other = "...and {{ . }} more"
+[appearsIn] # i.e. Which books/episodes/etc. a character is in
+other = "Appears In"
+[back] # e.g. back to previous page
+other = "&laquo; Back"
+[charTimeline]
+other = "{{ . }}'s Timeline"
+[cleanupDesc]
+one = "You've marked this page as needing cleanup."
+other = "You've marked these pages as needing cleanup."
+[cleanupDescOk]
+other = "Add {{ . }} to a page's tags to mark it as needing to be rewritten. Tagged pages will be listed here."
+[delimiter] # Goes between items in a list
+other = ", " # e.g. Item1", "Item 2", "Item3
+[editPage]
+other = "Edit this page"
+[inThisX] # e.g. "In This Section"
+other = "In This {{ . }}"
+[main] # For resource tabs
+other = "Main"
+[mainPageContent]
+other = "Main Page Content"
+[missingPageDesc]
+other = "Broken links on your wiki will be shown here. Clicking a name will copy its page creation command to your clipboard."
+[monthsInX]
+other = "Months In {{ . }}"
+[moreX] # e.g. "More Characters" or "More Countries"
+other = "More {{ . }}"
+[navMain]
+other = "Site Navigation"
+[needsCleanup]
+other = "Needs Cleanup"
+[none]
+other = "None"
+[na]
+other = "N/A"
+[nextX] # e.g. "Next Page"
+other = "Next {{ . }}"
+[onThisPage]
+other = "On This Page"
+[pageCount]
+one = "{{ .Count }} page"
+other = "{{ .Count }} pages"
+[photoCount]
+one = '<span class="ucc">{{ .Count }}</span> photo'
+other = '<span class="ucc">{{ .Count }}</span> photos'
+[prevX] # e.g. "Previous Page"
+other = "Previous {{ . }}"
+[printPage]
+other = "Print this page"
+[printDesc]
+other = "🖨️ Format and Print"
+[related]
+other = "Related"
+[spoilerBelow]
+one = "Spoiler Below"
+other = "Spoilers Below"
+[stubDesc]
+one = "These pages don't have any content yet."
+other = "These pages have less than {{ .Count }} words of content."
+[stubDescOk] # Shown if no stubs are found
+other = "No stubs detected yet."
+[typesOfX]
+other = "Types of {{ . }}"
+[viewTable] # For Airtable shortcode
+one = "View Full Table"
+other = "View Tables"
+[wordCount]
+one = "{{ .Count }} word"
+other = "{{ .Count }} words"
+[xFromY] # e.g. "Characters from {Country}"
+other = "{{ .items }} from {{ .title }}"
+[xInY] # e.g. "Places in {Country}"
+other = "{{ .items }} in {{ .title }}"
+
+#--- Common Nouns
+[age]
+one = "Age"
+other = "Ages"
+[animal]
+one = "Animal"
+other = "Animals"
+[birthday]
+one = "Birthday"
+other = "Birthdays"
+[book]
+one = "Book"
+other = "Books"
+[calendar]
+one = "Calendar"
+other = "Calendars"
+[capital]
+one = "Capital"
+other = "Capitals"
+[category]
+one = "Category"
+other = "Categories"
+[chapter]
+one = "Chapter"
+other = "Chapters"
+[character]
+one = "Character"
+other = "Characters"
+[climate]
+one = "Climate"
+other = "Climates"
+[color]
+one = "Color"
+other = "Colors"
+[country]
+one = "Country"
+other = "Countries"
+[demonym]
+one = "Demonym"
+other = "Demonyms"
+[dislikes] # (noun)
+other = "Dislikes"
+[element]
+one = "Element"
+other = "Elements"
+[episode]
+one = "Episode"
+other = "Episodes"
+[ethnicity]
+one = "Ethnicity"
+other = "Ethnicities"
+[event]
+one = "Event"
+other = "Events"
+[export]
+one = "Export"
+other = "Exports"
+[eye]
+one = "Eye"
+other = "Eyes"
+[favorite]
+one = "Favorite"
+other = "Favorites"
+[food]
+one = "Food"
+other = "Foods"
+[gender]
+one = "Gender"
+other = "Genders"
+[hair]
+one = "Hair"
+other = "Hair" # as in "hairstyle"
+[height]
+one = "Height"
+other = "Heights"
+[hobby]
+one = "Hobby"
+other = "Hobbies"
+[infobox]
+one = "Infobox"
+other = "Infoboxes"
+[interest]
+one = "Interest"
+other = "Interests"
+[likes] # (noun)
+other = "Likes"
+[magic]
+other = "Magic"
+[missingPage]
+one = "Missing Page"
+other = "Missing Pages"
+[month]
+one = "Month"
+other = "Months"
+[part]
+one="Part"
+other="Parts"
+[person]
+one="Person"
+other="People"
+[physicalTrait]
+one = "Physical Trait"
+other = "Physical Traits"
+[place]
+one = "Place"
+other = "Places"
+[precipitation]
+other = "Precip." # Abbreviated to fit in the infobox
+[relationship]
+one = "Relationship"
+other = "Relationships"
+[schedule]
+one = "Schedule"
+other = "Schedules"
+[season]
+one = "Season"
+other = "Seasons"
+[section]
+one = "Section"
+other = "Sections"
+[skillLevel]
+one = "Skill Level"
+other = "Skill Levels"
+[specialty]
+one = "Specialty"
+other = "Specialties"
+[species]
+one = "Species"
+other = "Species"
+[sport]
+one = "Sport"
+other = "Sports"
+[status]
+one = "Status"
+other = "Statuses"
+[strength]
+one = "Strength"
+other = "Strengths"
+[stub]
+one = "Stub"
+other = "Stubs"
+[subpage]
+one = "Subpage"
+other = "Subpages"
+[subplot]
+one = "Subplot"
+other = "Subplots"
+[temperature]
+one = "Temp." # Abbreviated to fit in the infobox
+other = "Temps."
+[timeline]
+one = "Timeline"
+other = "Timelines"
+[weakness]
+one = "Weakness"
+other = "Weaknesses"
+[weather]
+other = "Weather"
+[wind]
+one = "Wind"
+other = "Winds"
+[year]
+one = "Year"
+other = "Years"
+
+#--- Gender Icons
+[cismale]
+other = "&#9794; (cis)"
+[transmale]
+other = "&#9794; (trans)"
+[cisfemale]
+other = "&#9792; (cis)"
+[transfemale]
+other = "&#9792; (trans)"
+[nonbinary]
+other = "&#9893; (non-binary)"
+
+#--- Character Status
+[alive]
+other = "Alive"
+[aliveDet]
+other = "Alive (determinant)"
+[dead]
+other = "Dead"
+[deadDet]
+other = "Dead (determinant)"
+[unknown]
+other = "Unknown"
+
+#--- Calendar Terms
+[weekday1]
+other = "Sunday"
+[weekday2]
+other = "Monday"
+[weekday3]
+other = "Tuesday"
+[weekday4]
+other = "Wednesday"
+[weekday5]
+other = "Thursday"
+[weekday6]
+other = "Friday"
+[weekday7]
+other = "Saturday"
+
+[month1]
+other = "January"
+[month2]
+other = "February"
+[month3]
+other = "March"
+[month4]
+other = "April"
+[month5]
+other = "May"
+[month6]
+other = "June"
+[month7]
+other = "July"
+[month8]
+other = "August"
+[month9]
+other = "September"
+[month10]
+other = "October"
+[month11]
+other = "November"
+[month12]
+other = "December"

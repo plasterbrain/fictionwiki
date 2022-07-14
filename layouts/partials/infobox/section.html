@@ -1,0 +1,72 @@
+{{ $ariaLabel := "" }}
+{{- with .Title }}
+	<h3 id="info-{{ . | urlize }}" class="menu-label is-size-6">
+		{{ . }}
+	</h3>
+	{{ $ariaLabel = print "aria-labelledby='info-" (. | urlize) "'" }}
+{{- end }}
+{{- if .IsMap }}
+	<!-- fields: [label, value, link] -->
+	{{- range .Fields }}
+		{{- $label := index . "Label" -}}
+		{{- $value := index . "Value" -}}
+		{{- $link := index . "Link" -}}
+		<ul {{ $ariaLabel | safeHTMLAttr }} class="ml-3">
+			{{- range $value }}
+			<li class="is-size-7">
+				{{- if hasPrefix (printf "%T" .) "[]" -}}
+					{{ $innerLabel := index . 0 }}
+					{{- if $link -}}
+						{{ partial "func_linkPage.html" (dict "Title" $innerLabel "Path" $link) }}
+					{{ else }}
+						{{ $innerLabel | markdownify }}
+					{{ end }}
+					&ndash; {{ index . 1 -}}
+				{{- else -}}
+					{{- if $link -}}
+						{{- partialCached "func_linkPage.html" (dict "Title" . "Path" $link) (print $link .) -}}
+					{{- else -}}
+						{{- . | markdownify -}}
+					{{- end -}}
+				{{- end -}}
+			</li>
+			{{- end }}
+		</ul>
+	{{- end }}
+{{- else }}
+	<dl {{ $ariaLabel | safeHTMLAttr }}>
+		{{- range .Fields }}
+			{{- $value := index . "Value" -}}
+			{{- $link := index . "Link" -}}
+			<div role="presentation" class="columns mb-0 is-size-7">
+				<dt class="column is-one-third p-0 mr-2 is-align-self-center">
+					{{- index . "Label" -}}
+				</dt>
+				<dd class="column m-0 p-0">
+					{{- if hasPrefix (printf "%T" $value) "[]" -}}
+						{{- $delimiter := i18n "delimiter" -}}
+						{{- if $link }}
+							{{- $i := 0 -}}
+							{{- $count := len $value -}}
+							{{- range $value -}}
+								{{- partialCached "func_linkPage.html" (dict "Title" . "Path" $link) (print $link .) -}}
+								{{- $i = add $i 1 -}}
+								{{- if lt $i $count -}}
+									{{- $delimiter -}}
+								{{- end -}}
+							{{- end -}}
+						{{- else }}
+							{{ delimit $value ", " | markdownify }}
+						{{- end }}
+					{{- else }}
+						{{- if $link }}
+							{{- partialCached "func_linkPage.html" (dict "Title" $value "Path" $link) (print $link $value) -}}
+						{{- else }}
+							{{ $value | markdownify }}
+						{{- end }}
+					{{- end }}
+				</dd>
+			</div>
+		{{- end -}}
+	</dl>
+{{- end }}

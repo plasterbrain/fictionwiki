@@ -1,0 +1,12 @@
+<nav class="breadcrumb mt-3" aria-label='{{ i18n "breadcrumb" 2}}'>
+    <ul>
+        {{- block "breadcrumbs" . }}
+        {{ partial "page/breadcrumb.html" . }}
+        <li class="is-active">
+            <a aria-disabled="true" disabled aria-current="page">
+                {{ .LinkTitle }}
+            </a>
+        </li>
+        {{- end }}
+    </ul>
+</nav>

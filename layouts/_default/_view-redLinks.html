@@ -1,0 +1,12 @@
+{{- $redPrefix := "{REDLINK}" -}}
+{{- if or (.HasShortcode "link") (.HasShortcode "infobox") -}}
+    {{- range (.PlainWords) -}}
+        {{ if hasPrefix . $redPrefix }}
+            {{- $label := strings.TrimRight ".()[]{}!?;:-=@#$%^&*<>" (strings.TrimPrefix $redPrefix .) -}}
+            {{- $code := print "hugo new " (path.Join $label "/_index.md") -}}
+            <li>
+			    <button onClick="document.getElementById('code-redlink').innerHTML='{{ $code }}'" class="button-redlink button" data-clipboard-text="{{ $code }}">{{ $label }}</button>
+            </li>
+        {{ end }}
+    {{- end -}}
+{{- end -}}

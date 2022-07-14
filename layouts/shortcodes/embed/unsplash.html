@@ -1,0 +1,20 @@
+{{- $src := cond (.IsNamedParams) (.Get "Link") (.Get 0) -}}
+{{- if $src -}}
+{{ $align := cond (.IsNamedParams) (.Get "Align") (.Get 1) | default "center" }}
+{{- $width := cond (.IsNamedParams) (.Get "Width") (.Get 2) | default 500 -}}
+{{- $height := cond (.IsNamedParams) (.Get "Height") (.Get 3) | default 300 -}}
+{{- $link := cond (.IsNamedParams) (.Get "Link") (.Get 4) | default true -}}
+{{ if ne $align "center" }}
+    {{ $width = math.Min $width 300 }}
+{{ end }}
+{{ $url := replace (print $src "/" $width "x" $height) "https://unsplash.com/photos/" "https://source.unsplash.com/" }}
+{{- with resources.GetRemote $url }}
+    {{- with .Err }}
+        {{ warnf "%s" . }}
+    {{- else }}
+        {{ if $link }}<a href="{{ $src }}" {{ if ne $align "center"}}style="float: {{ $align }}"{{ else }}style="margin: 0 auto;" class="is-block has-text-centered"{{ end }}>{{ end }}
+            <img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="">
+        {{ if $link }}</a>{{ end }}
+    {{- end }}
+{{ end }}
+{{- end -}}

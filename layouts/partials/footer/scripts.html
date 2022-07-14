@@ -1,0 +1,45 @@
+<!-- @NOTE This may be totally uselessly inefficient but we'll see! -->
+<!-- @TODO fix main -->
+<!-- @TODO find a way to only enqueue mermaid if resources need it -->
+{{- $scripts := slice "calendar" "unsplash" -}}
+{{- $scriptsCached := slice "mermaid" "prism" "masonry" -}}
+{{- if not (.Page.Store.Get "hasPrint") -}}
+    {{/* Print handles resources differently */}}
+    {{- $scriptsCached = $scriptsCached | append "resources" -}}
+{{- end -}}
+{{- $scriptParams := dict
+    "main" (dict
+        "keywords" $.Site.Params.highlightKeywords)
+    "unsplash" (dict
+        "access_key" $.Site.Params.unsplashAccessKey
+        "app_name" ($.Site.Title | urlize) )
+-}}
+
+{{- $store := .Page.Store -}}
+{{- $minify := $.Site.Params.compressJS -}}
+{{- range (slice (slice $scripts false) (slice $scriptsCached true) ) -}}
+    {{- partial "func_loadScript.html"
+        (dict "Scripts" (index . 0) "Store" $store "Cached" (index . 1) "ScriptParams" $scriptParams "Minify" $minify) -}}
+{{- end -}}
+
+{{- define "partials/func_loadScript.html" -}}
+    <!-- @NOTE Can you cache a partial that's also being called non-cachedly if it has a different cache key or what -->
+    {{- $store := .Store -}}
+    {{- $cached := .Cached -}}
+    {{- $scriptParams := .ScriptParams -}}
+    {{- range .Scripts -}}
+        {{- if not ($store.Get (print "has" (. | title))) -}}
+            {{- continue -}}
+        {{- end -}}
+        {{- $options := (dict "Script" .) -}}
+        {{- with (index $scriptParams .) -}}
+            <!-- dict "Script" "[mermaid]" "Params" (dict "key" "value"...) -->
+            {{- $options = merge $options (dict "Params" .) -}}
+        {{- end -}}
+        {{- if $cached -}}
+            {{- partialCached "footer/js-general.html" $options . }}
+        {{- else -}}
+            {{- partial "footer/js-general.html" $options }}
+        {{- end }}
+    {{- end }}
+{{- end }}

@@ -1,0 +1,40 @@
+{{- $allEvents := .Events -}}
+{{- if gt (len $allEvents) 0 -}}
+	{{- .CurrentPage.Store.Set "hasCalendar" true -}}
+	{{- $years := ($allEvents.GroupByDate "2006").Reverse -}}
+
+	<section id="page__timeline" aria-labelledby="page__timeline__title">
+		<h2 id="page__timeline__title">
+			{{/* Events */}}
+			{{- i18n "event" 2 -}}
+		</h2>
+		<div role="tablist" id="tabs-timeline"
+			class="tabs is-boxed is-centered">
+			<ul class="mx-0">
+				<li class="is-active">
+					<button role="tab" class="tab"
+							aria-selected="true"
+							aria-controls="timeline-calendar">
+						{{- i18n "calendar" 1 -}}
+					</button>
+				</li>
+				<li>
+					<button role="tab" class="tab"
+							aria-selected="true"
+							aria-controls="timeline-vertical">
+						{{- i18n "timeline" 1 -}}
+					</button>
+				</li>
+			</ul>
+		</div>
+		<div role="tabpanel" class="tabpanel" id="timeline-calendar"
+			 aria-expanded="true" aria-labelledby="timeline-calendar__title">
+			{{ partial "page/timeline-calendar.html" (dict "Years" $years) }}
+		</div>
+		<div role="tabpanel" class="tabpanel" id="timeline-vertical"
+			 aria-expanded="false" aria-labelledby="timeline-vertical__title"
+			 style="display:none;">
+			{{ partial "page/timeline-vertical.html" (dict "Years" $years) }}
+		</div>
+	</section>
+{{- end -}}

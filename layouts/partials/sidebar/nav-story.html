@@ -1,0 +1,8 @@
+<!-- Episodes (first-level subpages) -->
+{{ partial "sidebar/nav-generic.html" (dict "pages" (where .Pages "Kind" "page") "label" (i18n "episode")) }}
+<!-- Subplots (first-level sections) -->
+{{ partial "sidebar/nav-generic.html" (dict "pages" (where .Pages "Kind" "section") "label" (i18n "subplot")) }}
+<!-- Characters in this story -->
+{{- $slug := "" -}}
+{{- with .File -}}{{- $slug = .ContentBaseName -}}{{- end -}}
+{{ partial "sidebar/nav-generic.html" (dict "pages" (where (where $.Site.Pages "Section" "characters") "Params.stories" "intersect" (slice ($slug | title) $slug)) "label" (i18n "character")) }}

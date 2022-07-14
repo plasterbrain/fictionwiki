@@ -1,0 +1,8 @@
+# Infobox: Country
+[[section]]
+fields = [
+    {id="capital", n=1},
+    {id="demonym", n=1},
+    {id="export", n=2},
+    {id="climate", n=1},
+]

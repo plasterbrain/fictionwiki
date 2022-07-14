@@ -1,0 +1,138 @@
+{{- $firstYear := (index .Years 0).Key -}}
+<!-- @TODO It'd be nice to have these as theme variables or somethin so they're consistent here and in JS -->
+{{- $yearIDFormat := "year-%d" -}}
+{{- $monthOnlyIDFormat := "month-%d" -}}
+{{- $monthIDFormat := print $yearIDFormat "-" $monthOnlyIDFormat -}}
+{{- $dayIDFormat := print $monthIDFormat "-" "day-%d" -}}
+
+<!-- @TODO Fantasy-Calendar ONLY Site Options -->
+{{- $numMonths := 12 -}}
+{{- $numMonthdays := 30 -}}
+{{- $numWeekdays := 7 -}}
+
+{{- $activeMonths := dict -}}
+{{- range .Years }}
+    {{- $year := .Key -}}
+    {{- $months := slice -}}
+    {{- range (.Pages.GroupByDate "1").Reverse -}}
+        {{- $months = $months | append .Key -}}
+    {{- end -}}
+    {{- $activeMonths = merge $activeMonths (dict (string .Key) $months) -}}
+{{- end -}}
+
+<header class="columns is-mobile mb-3 is-align-items-center">
+    <h3 class="is-sr-only" id="timeline-calendar__title">
+        {{- i18n "calendar" 1 -}}
+    </h3>
+    <div role="tablist"
+        class="column buttons m-0 p-0 is-three-quarters-tablet{{ if le (len .Years) 1 }} is-flex is-justify-content-center{{- end -}}"
+        aria-label='{{ i18n "monthsInX" (index .Years 0).Key -}}'>
+        {{- $first := true -}}
+        {{- $active := true -}}
+        {{- range $i := seq $numMonths -}}
+            {{- $active = and (in (index $activeMonths (string $firstYear)) (string $i)) $first -}}
+            <button role="tab" {{ if $active -}}aria-controls="{{- printf $monthIDFormat (int $firstYear) (int $i) | safeHTMLAttr -}}" {{ else -}}disabled{{- end }}
+                aria-selected="{{ if $active }}true{{ else }}false{{ end }}"
+                data-target='{{ printf $monthOnlyIDFormat $i | safeHTMLAttr }}'
+                class="button-month button p-1{{ if $active }} has-text-primary is-selected{{ end }}">
+                {{- i18n (print "monthShort" (string $i)) -}}
+            </button>
+            {{- if $active -}}{{- $first = false -}}{{- end -}}
+        {{- end -}}
+    </div>
+    {{- if gt (len .Years) 1 -}}
+        <div role="presentation" class="column is-flex is-justify-content-end">
+            <label class="mr-2" for="select-year">
+                {{- i18n "year" 1 -}}
+            </label>
+            <div role="presentation" class="select is-small">
+                <select id="select-year" class="select-year" autocomplete="off">
+                    {{- $first := true -}}
+                    {{- range .Years }}
+                        {{- $year := int .Key -}}
+                        <option value='{{- printf $yearIDFormat $year | safeHTMLAttr -}}' {{ if $first -}}selected{{- end -}}>
+                            {{- $year -}}
+                        </option>
+                        {{- $first = false -}}
+                    {{- end }}
+                </select>
+            </div>
+        </div>
+    {{- end -}}
+</header>
+{{/* /CONTROLS */}}
+{{- $first := true -}}
+{{- range .Years }}
+    {{- $year := int .Key -}}
+    {{- $months := (.Pages.GroupByDate "1").Reverse -}}
+    <div role="tabpanel"
+        id='{{- printf $yearIDFormat $year | safeHTMLAttr -}}'
+        data-months='{{- delimit (index $activeMonths (.Key)) "," -}}'
+        class="calendar__year"
+        {{ if not $first -}}style="display: none;"{{- end -}}>
+        {{- $firstMonth := true -}}
+        {{- range $months }}
+            {{- $month := int .Key -}}
+            {{- $monthID := printf $monthIDFormat $year $month -}}
+            {{- $monthTitleID := print $monthID "__title" -}}
+            {{- $pages := where .Pages "Params.calHide" "!=" "true" -}}
+            <div role="tabpanel" id="{{- $monthID | safeHTMLAttr -}}"
+                    aria-labelledby='{{- print $monthTitleID | safeHTMLAttr -}}'
+                    aria-expanded="{{- if $firstMonth -}}true{{- else -}}false{{- end -}}"
+                    data-month="{{- printf $monthOnlyIDFormat $month | safeHTMLAttr -}}"
+                    class="calendar__month"
+                    {{ if not $firstMonth -}}style="display: none;"{{- end -}}>
+                <h3 id='{{ $monthTitleID | safeHTMLAttr -}}'
+                    class="has-text-centered mb-5">
+                    {{- i18n (printf "month%s" .Key) }} {{ $year -}}
+                </h3>
+                <div role="presentation" class="calendar__month__table">
+                    {{- range $index, $num := (seq $numWeekdays) -}}
+                        <div role="presentation" class="calendar__weekday is-label">
+                            {{- i18n (printf "weekday%d" (add 1 $index)) -}}
+                        </div>
+                    {{- end }}
+
+                    <!-- @TODO Fantasy-Calendar ONLY: Calculate day offset -->
+                    {{- $emptyBoxes := partial "event/func_dateDiff.html" (dict "year" $year "month" $month "day" 1) -}}
+                    {{- $daysBefore := sub (add $numMonthdays 1) $emptyBoxes.weekday -}}
+                    {{- range $index, $num := (seq $emptyBoxes.weekday) -}}
+                        <div class="calendar__day calendar__day-fillin">
+                            <span class="day__number">
+                                {{- add $daysBefore $index -}}
+                            </span>
+                        </div>
+                    {{- end -}}
+
+                    {{- range $index, $num := (seq $numMonthdays) -}}
+                        {{- $day := (add $index 1) -}}
+                        <div id='{{- printf $dayIDFormat $year $month $day | safeHTMLAttr -}}' class="calendar__day">
+                            <span class="day__number">{{- $day -}}</span>
+                            <ul class="day__list">
+                                {{- range sort (where $pages "Date.Day" $day) "Date" "asc" }}
+                                <li>
+                                    <time>
+                                        {{- .Date.Format "3:04pm" -}}
+                                    </time>
+                                    <a href="{{ .Permalink }}">{{- .Params.calTitle | default .Title -}}</a>
+                                </li>
+                                {{- end }}
+                            </ul>
+                        </div>
+                    {{- end }}
+
+                    <!-- @TODO Fantasy-Calendar ONLY: Fill in remaining days -->
+                    {{- range $index, $num := (seq (sub $numWeekdays (mod (add 2 $emptyBoxes.weekday) $numWeekdays))) }}
+                        <div class="calendar__day calendar__day-fillin">
+                            <span class="day__number">
+                                {{- add $index 1 -}}
+                            </span>
+                        </div>
+                    {{- end }}
+                </div><!-- Month Table -->
+            </div><!-- Month table + title container -->
+            {{- $firstMonth = false -}}
+        {{- end }}
+    </div>
+    {{- $first = false -}}
+{{- end }}

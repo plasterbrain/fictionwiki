@@ -1,0 +1,8 @@
+{{- with .Parent }}
+	{{- with .CurrentSection }}
+		{{- partial "page/breadcrumb.html" . }}
+	{{- end }}
+	<li>
+		<a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+	</li>
+{{- end }}

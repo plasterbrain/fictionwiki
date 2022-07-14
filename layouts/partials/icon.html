@@ -1,0 +1,4 @@
+{{- with resources.Get (printf "icons/%s.svg" .) -}}
+    {{- $icon := . | resources.Minify -}}
+    {{ $icon.Content | safeHTML }}
+{{- end -}}

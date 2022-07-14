@@ -1,0 +1,25 @@
+<svg focusable="false" aria-hidden="true" class="icon-thumbtack" width="100%" height="100%" viewBox="0 0 657 789" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+	<g transform="matrix(3.125,0,0,3.125,0,0)">
+		<g transform="matrix(1,0,0,1,-583,-198.53)">
+			<circle cx="691.5" cy="349.5" r="101.5" style="fill:rgb(40,41,41);"/>
+		</g>
+		<g transform="matrix(1,0,0,1,-583,-203.53)">
+			<circle cx="691.5" cy="349.5" r="101.5" style="fill:rgb(40,41,41);"/>
+		</g>
+		<g transform="matrix(1,0,0,1,-587,-202.53)">
+			<circle cx="691.5" cy="349.5" r="101.5" style="fill:rgb(230,60,34);stroke:rgb(40,41,41);stroke-width:6px;"/>
+		</g>
+		<g transform="matrix(1.06015,0,0,1.06015,-617.752,-270.658)">
+			<circle cx="677.5" cy="384.5" r="66.5" style="fill:rgb(187,46,25);"/>
+		</g>
+		<g transform="matrix(1,0,0,1,-587,-211.53)">
+			<circle cx="666.5" cy="290.5" r="76.5" style="fill:rgb(230,60,34);"/>
+		</g>
+		<g transform="matrix(1,0,0,1,-587,-211.53)">
+			<circle cx="666.5" cy="290.5" r="76.5" style="fill:rgb(230,60,34);stroke:rgb(40,41,41);stroke-width:4.94px;"/>
+		</g>
+		<g transform="matrix(1,0,0,1,-582,-198.53)">
+			<path d="M602,284C592.29,267.305 610.378,209.77 666,215C626.98,228.146 615.266,258.934 602,284Z" style="fill:rgb(244,244,244);"/>
+		</g>
+	</g>
+</svg>

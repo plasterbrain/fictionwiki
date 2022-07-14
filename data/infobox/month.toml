@@ -1,0 +1,14 @@
+# Infobox: Month
+[[section]]
+fields = [
+    {id="color", n=2},
+    {id="animal", n=1},
+    {id="element", n=1},
+]
+[[section]]
+title = "weather"
+fields = [
+    {id="temp", n=2},
+    {id="precip", n=1},
+    {id="wind", n=1},
+]

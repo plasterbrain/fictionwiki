@@ -1,0 +1,4 @@
+{{- define "sidebar2" }}
+	{{ partial "sidebar/nav-toc.html" . }}
+    {{ partialCached "sidebar/nav-generic.html" (dict "Pages" .Parent.RegularPages "Label" (i18n "inThisX" (i18n "section" 1 ))) .Parent }}
+{{- end }}

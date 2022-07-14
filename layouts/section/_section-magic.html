@@ -1,0 +1,29 @@
+{{- define "subpages" }}
+	{{- $title := .Params.subpagesTitle | default .Title -}}
+	<h2>{{ i18n "typesOfX" $title }}</h2>
+	{{- with (where .RegularPagesRecursive "Parent.Title" "!=" .Title) }}
+		<table>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Type</th>
+					<th>Rarity</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{- range . }}
+				<tr>
+					<td><a href="{{ .RelPermalink }}">{{ .Title }}</a></td>
+					<td>{{ .Parent.Title }}</td>
+					<td><span class="tag">{{ .Params.rarity }}</span></td>
+				</tr>
+				{{- end }}
+			</tbody>
+		</table>
+	{{- end }}
+{{- end }}
+
+{{- define "sidebar2" }}
+	{{ partial "sidebar/nav-generic.html" (dict "pages" (where .Pages "Kind" "section") "label" (i18n "typesOfX" (i18n "magic"))) }}
+	{{ partial "sidebar/nav-generic.html" (dict "pages" (where .Pages "Kind" "!=" "section") "label" (i18n "subpage")) }}
+{{- end }}

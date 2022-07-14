@@ -1,0 +1,70 @@
+<!-- Our known date is the site's "freeze date" -->
+{{- $refWeekday := .Site.Params.freezeWeekday | default 4 -}}
+{{- $refDate := time (.Site.Params.freezeDate | default "2020-01-01") -}}
+{{- $refDate = (dict
+	"year" $refDate.Year
+	"month" (printf "%d" $refDate.Month)
+	"day" $refDate.Day "weekday" (sub $refWeekday 1)
+) -}}
+<!-- @TODO on normal calendar sites you can just format whatever Hugo's default date difference function spits out. Nice! -->
+
+<!-- If .date2 isn't set, use the reference date as default. -->
+<!-- No, the `default` function doesn't work. -->
+{{ $dict := merge (dict
+	"year2" $refDate.year
+	"month2" $refDate.month
+	"day2" $refDate.day) . }}
+<!-- @TODO Calculate both weekdays if two custom dates are passed in -->
+<!-- @SEE https://github.com/gohugoio/hugoDocs/pull/280 -->
+{{- $date1 := (dict
+	"year" (int (.year | replaceRE "^0+" ""))
+	"month" (int (.month | replaceRE "^0+" ""))
+	"day" (int (.day | replaceRE "^0+" ""))
+) -}}
+{{- $date2 := (dict
+	"year" (int ($dict.year2 | replaceRE "^0+" ""))
+	"month" (int ($dict.month2 | replaceRE "^0+" ""))
+	"day" (int ($dict.day2 | replaceRE "^0+" ""))
+	"weekday" (sub $refWeekday 1)
+) -}}
+
+<!-- Start debug output -->
+{{- $log := .log -}}
+{{- $return := "" -}}
+{{- if $log -}}
+{{ $return = printf "Date 2: %d/%d/%d<br>Date 1: %d/%d/%d<br>Difference:<br>" $date2.month $date2.day $date2.year $date1.month $date1.day $date1.year }}
+{{- end -}}
+
+<!-- Months in Refall are 30 days long. @TODO custom value SOMEDAY... -->
+{{- $daysPerMonth := 30 }}
+{{- if gt $date1.day $daysPerMonth -}}
+	{{- $date1 := merge $date1 (dict "day" $daysPerMonth) -}}
+{{- end -}}
+{{- if gt $date2.day $daysPerMonth -}}
+	{{- $date2 := merge $date2 (dict "day" $daysPerMonth) -}}
+{{- end -}}
+
+{{- $yearDiff := sub $date2.year $date1.year -}}
+{{- $yearDiffInMonths := mul $yearDiff 12 -}}
+
+{{- $monthDiff := (sub $date2.month $date1.month) -}}
+{{- $monthDiffInDays := mul $daysPerMonth $monthDiff -}}
+{{- $monthDiffTotal := add $monthDiff $yearDiffInMonths -}}
+{{- $monthDiffTotalInDays := mul $daysPerMonth $monthDiffTotal -}}
+
+{{- $dayDiff := (sub $date2.day $date1.day) -}}
+{{- $dayDiffTotal := add $dayDiff $monthDiffTotalInDays -}}
+
+{{- if $log -}}
+	{{ $return = printf "%s%d years, %d months, %d days<br>" $return $yearDiff $monthDiff $dayDiff }}
+{{- end -}}
+
+{{- $weekdayDiff := mod $dayDiffTotal 7 -}}
+{{- $weekdayDiff = sub $weekdayDiff $refDate.weekday -}}
+
+{{- $newWeekday := mod (sub 7 $weekdayDiff) 7 -}}
+{{- if lt $newWeekday 0 -}}{{- $newWeekday = mul -1 $newWeekday -}}{{- end -}}
+{{- if not $log -}}
+{{ $return = (dict "years" $yearDiff "months" $monthDiff "days" $dayDiff "yearsInMonths" $yearDiffInMonths "monthsInDays" $monthDiffInDays "monthsTotal" $monthDiffTotal "daysTotal" $dayDiffTotal "weekday" $newWeekday) }}
+{{- end -}}
+{{- return $return -}}

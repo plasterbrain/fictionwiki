@@ -1,0 +1,99 @@
+/* SCSS! */
+
+:root {
+	font-size: 150%;
+}
+
+body {
+	min-height: 100vh;
+	font-weight: 300;
+}
+
+main {
+	word-wrap: anywhere;
+}
+
+h1, h2, .title {
+	font-family: '{{ .Params.fontHeading | default "inherit" }}';
+	text-transform: uppercase;
+	font-weight: normal;
+}
+
+dt {
+	font-weight: bold;
+}
+
+dd {
+	ul, ol {
+		margin-top: .3rem;
+		margin-bottom: .3rem;
+	}
+}
+
+.subtitle {
+	font-family: '{{ .Params.fontSubheading | default "inherit" }}';
+}
+
+.font-note {
+	font-family: '{{ .Params.fontNote | default "inherit" }}';
+	color: #8fa6bb;
+}
+
+.content {
+	a {
+		font-weight: bold;
+	}
+
+	h1 {
+		font-size: 3rem;
+	}
+}
+
+.is-label {
+	text-transform: uppercase;
+	color: #7a7a7a;
+}
+
+.missing {
+	color: #b32d2d;
+	text-decoration: line-through;
+}
+
+.columns {
+	margin: 0;
+}
+
+.breadcrumb li+li::before {
+	content: "\00bb"
+}
+
+.tab__toc {
+	margin-bottom: .75rem;
+
+	ol {
+		list-style: none;
+	}
+
+	li {
+		padding: .5rem .75rem 0;
+	}
+}
+
+@media print {
+	:root {
+		font-size: 100%;
+	}
+	
+	.is-hidden-print {
+		display: none !important;
+	}
+	#infobox {
+		width: 100% !important;
+		margin-bottom: 1rem;
+		background: none;
+		box-shadow: none;
+	}
+}
+
+@import "modules/shortcodes";
+@import "modules/timeline";

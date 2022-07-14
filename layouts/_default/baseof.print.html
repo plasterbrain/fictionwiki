@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html id="document">
+<head>
+	<title>{{ .Title }}</title>
+	{{- partialCached "head/meta-site.html" . -}}
+	{{- partialCached "head/meta-prism.html" . -}}
+    <style>
+        @page {
+            @top-center {
+                content: counter(page);
+            }
+        }
+    </style>
+</head>
+<body>
+    {{/* RESOURCES: Where extra page tab content is stored */}}
+    {{- block "resources" . -}}
+        {{- .Page.Store.Set "hasResources" (where .Resources "ResourceType" "page") -}}
+    {{- end -}}
+    {{- $resources := .Page.Store.Get "hasResources" -}}
+    {{- $hasInfobox := .HasShortcode "infobox/character" -}}
+    {{/* /RESOURCES */}}
+    <main class="content p-6">
+        <article>
+            <header class="mb-5">
+                <a id="button-back" class="print__helper" href="#" onclick="history.back()" style="display:block;">
+                    {{- i18n "back" | safeHTML -}}
+                </a>
+                <button id="button-print" class="print__helper button my-3" style="display:block;">
+                    {{- i18n "printDesc" -}}
+                </button>
+                {{- if or $hasInfobox $resources -}}
+                    {{- $hideStuff := slice (dict "Title" (i18n "mainPageContent") "LinkTitle" "main") -}}
+                    {{- if .HasShortcode "infobox/character" -}}
+                        {{- $hideStuff = $hideStuff | append (slice (dict ".LinkTitle" "infobox" "Title" (i18n "infobox" 1))) -}}
+                    {{- end -}}
+                    {{- $hideStuff := $hideStuff | append $resources -}}
+
+                    <ul class="print__helper ml-0" type="none" style="list-style-type:none;">
+                    {{- range $hideStuff }}
+                        {{- $title := .LinkTitle | urlize -}}
+                        <li>
+                            <label class="checkbox">
+                                <input class="print__checkbox" aria-controls="{{- $title -}}" type="checkbox" checked class="mr-2">
+                                {{- "" -}}
+                                <span style="vertical-align: bottom;" class="is-size-7">{{- .Title -}}</span>
+                            </label>
+                        </li>
+                    {{- end }}
+                    </ul>
+                {{- end -}}
+                <h1 id="page__title" class="title mt-0">{{- .Title -}}</h1>
+                {{- with .Description }}
+                    <p class="subtitle is-size-5">{{- . | markdownify -}}</p>
+                {{- end }}
+            </header>
+            {{/* MAIN: Main page content */}}
+            <div id="main">
+            {{- block "main" . }}
+                <h2 class="is-sr-only">
+                    {{- i18n "main" -}}
+                </h2>
+                {{- .Content }}
+            {{- end }}
+            </div>
+            {{/* /MAIN */}}
+            {{- range .Page.Store.Get "hasResources" }}
+                {{- $title := .LinkTitle | urlize -}}
+                <div id="{{- $title -}}" class="mt-2">
+                    <h2>{{ .Title }}</h2>
+                    {{- with .Description -}}
+                        <p class="is-size-5">{{- . -}}</p>
+                    {{- end -}}
+                    {{- .Content }}
+                </div>
+        {{- end }}
+    </article>
+    </main>
+    {{- .Page.Store.Set "hasPrint" true -}}
+	{{- partial "footer/scripts.html" . -}}
+	{{- partialCached "footer/js-print.html" . -}}
+</body>
+
+</html>

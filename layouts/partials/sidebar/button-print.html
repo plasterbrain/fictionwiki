@@ -1,0 +1,6 @@
+{{ with  .OutputFormats.Get "print" -}}
+    <a class="button" href="{{ .RelPermalink }}">
+        <span class="icon is-small" role="presentation">🖨️</span>
+        <span>{{- i18n "printPage" -}}</span>
+    </a>
+{{- end }}

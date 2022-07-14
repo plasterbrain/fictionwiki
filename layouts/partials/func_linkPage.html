@@ -1,0 +1,21 @@
+{{- $page := where site.Pages "LinkTitle" .Title -}}
+{{- if not $page -}}
+    {{- $page = where site.Pages "Slug" (.Title | urlize ) -}}
+    {{- if not $page -}}
+        <!-- Maybe the page title is plural and we got the singular?! -->
+        {{- $page = where site.Pages "Title" (print .Title "s") -}}
+    {{- end -}}
+{{- end -}}
+{{- if $page -}}
+    {{- $firstMatch := index $page 0 -}}
+    {{- printf `<a href="%s">%s</a>` $firstMatch.RelPermalink .Title | safeHTML -}}
+{{- else -}}
+    {{ $path := "" }}
+    {{ with .File }}
+        {{ $path = .Path }}
+    {{ else }}
+        {{ $path = .Path }}
+    {{ end }}
+    {{- $url := print "/" $path "/" .Title | urlize -}}
+    <a href="{{ $url }}" class="missing">{{- .Title -}}</a><span style="display: none;">{REDLINK}{{- .Title -}}</span>
+{{- end -}}

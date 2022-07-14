@@ -1,0 +1,46 @@
+{{ $page := . }}
+{{ $firstSec := .FirstSection }}
+<nav class="menu navbar">
+	<ul class="menu-list is-hidden-touch is-hidden-desktop-only">
+		{{- range .Site.Sections -}}
+			{{- $isCurrent := eq $page . -}}
+			{{- $hasCurrent := eq $firstSec . -}}
+			<li>
+				<a href="{{ .Permalink }}"
+				   class="{{ if $isCurrent }}is-active{{ end }}">
+				   {{- .LinkTitle -}}
+				</a>
+				{{- if or $isCurrent $hasCurrent -}}
+					<ul class="ml-4">
+						{{- range first 10 (where .Pages "Kind" "section" | default (where .Pages "Kind" "page")) }}
+							{{- $isCurrent = eq $page . -}}
+							<li class="is-size-7">
+								<a href="{{- .Permalink -}}" class="{{- if $isCurrent -}}is-active{{- end -}}">
+								   {{ .LinkTitle }}
+								</a>
+							</li>
+						{{- end }}
+					</ul>
+				{{- end -}}
+			</li>
+		{{ end }}
+	</ul>
+	<!-- Mobile Version -->
+	<div role="presentation" class="navbar-menu is-hidden-widescreen is-active is-shadowless">
+		<div role="presentation" class="navbar-start">
+			{{- range .Site.Sections -}}
+				{{- $isCurrent := eq $page . -}}
+				{{- $hasCurrent := eq $firstSec . -}}
+				<a class="navbar-item" href="{{ .Permalink }}"
+					class="{{ if $isCurrent }}is-active{{ end }}">
+					{{- .LinkTitle -}}
+				</a>
+			{{- end -}}
+		</div>
+		<div role="presentation" class="navbar-end is-hidden-touch">
+			<div role="presentation" class="navbar-item">
+				{{- partialCached "sidebar/pagecount.html" . -}}
+			</div>
+		</div>
+	</div>
+</nav>

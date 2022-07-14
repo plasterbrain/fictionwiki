@@ -1,0 +1,31 @@
+{{- $page := cond .IsNamedParams (.Get "Name") (.Get 0) | default false -}}
+<!-- SHORTCODE: Event Page Embed -->
+{{- if not $page -}}
+	{{ partialCached "shortcodeError.html" (dict "CallingPage" . "Shortcode" "event") "event" }}
+{{- else -}}
+	{{- $full := cond .IsNamedParams (.Get "Full") (.Get 1) | default false -}}
+	{{- with (where .Site.RegularPages "File.TranslationBaseName" $page) -}}
+		{{- with index . 0 -}}
+			<div class="is-bg-accent p-3 mb-3">
+				<header>
+					<time class="is-block mb-2" datetime="{{  .Date.Format " 2006-01-02" }}">
+						{{ .Date.Format "1/2/2006, 3:04pm" }}
+					</time>
+					<h4 class="mb-2">
+						<a href="{{ .RelPermalink }}">
+							{{- .Title | safeHTML -}}
+						</a>
+					</h4>
+					{{- partial "event/meta.html" . }}
+				</header>
+				<div class="mt-2" role="presentation">
+					{{- if $full -}}
+						{{ .Content }}
+					{{- else -}}
+						{{- .Description -}}
+					{{- end -}}
+				</div>
+			</div>
+		{{- end -}}
+	{{- end -}}
+{{- end -}}

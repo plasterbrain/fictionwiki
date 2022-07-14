@@ -1,0 +1,24 @@
+{{ if $.PrevInSection }}
+<a href="{{ $.PrevInSection.Permalink }}">
+<article class="is-bg-accent is-flex mb-1 pt-2 px-2 pb-3">
+	<span style="margin-top: -1rem;" role="presentation" class="is-size-1 mr-2">&laquo;</span>
+	<div role="presentation">
+		<span class="is-size-5">Previous: {{ .PrevInSection.Title }}</span>
+		<span class="is-italic">{{ .PrevInSection.Date.Format "1/2/2006, 3:04pm" }}</span>
+		<time class="is-block">{{ partial "event/relDate.html" (dict "later" (time .Date) "earlier" (time .PrevInSection.Date) ) }} earlier</time>
+	</div>
+</article>
+</a>
+{{ end }}
+{{ if $.NextInSection }}
+<a class="is-block" href="{{ $.NextInSection.Permalink }}">
+<article class="is-bg-accent is-flex mb-1 pt-2 px-2 pb-3">
+	<div role="presentation" class="has-text-right" style="width:100%;">
+		<span class="is-size-5">Next: {{ .NextInSection.Title }}</span>
+		<span class="is-italic">{{ .NextInSection.Date.Format "1/2/2006, 3:04pm" }}</span>
+		<time class="is-block">{{ partial "event/relDate.html" (dict "earlier" (time .Date) "later" (time .NextInSection.Date) ) }} later</time>
+	</div>
+	<span style="margin-top: -1rem;" role="presentation" class="is-size-1 ml-2">&raquo;</span>
+</article>
+</a>
+{{ end }}

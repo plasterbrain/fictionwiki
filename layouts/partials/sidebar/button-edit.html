@@ -1,0 +1,13 @@
+{{- $slug := or .Slug (.Title | urlize) -}}
+{{ with .File }}
+    {{ $slug = .Path }}
+{{ else }}
+    {{ $slug = .Path }}
+{{ end }}
+
+{{- $slug = path.Join "/" $slug -}}
+
+<a class="button" href='{{- partialCached "func_linkEditor.html" . | safeURL -}}{{ $slug }}'>
+    <span class="icon is-small" role="presentation">✏️</span>
+    <span>{{- i18n "editPage" -}}</span>
+</a>

@@ -1,0 +1,49 @@
+/*--- Shortcodes, Flowcharts, Prism */
+$size__thumbtack: 30px;
+
+.mermaid rect {
+    shape-rendering: geometricPrecision;
+}
+
+.mermaid text {
+    text-rendering: geometricPrecision;
+}
+
+.mermaid .label {
+    font-weight: normal;
+
+    div {
+        text-align: left;
+    }
+}
+
+.mermaidTooltip {
+    position: absolute;
+}
+
+.tooltip--parent {
+    border-radius: 50%;
+    display: inline-block;
+    font-size: .8em;
+    height: .9rem;
+    line-height: 1;
+    margin-top: -.2rem;
+    text-align: center;
+    vertical-align: middle;
+    width: .9rem;
+}
+
+.icon-thumbtack {
+	height: $size__thumbtack;
+	position: absolute;
+	top: -.5rem;
+	left: calc(#{"50% - #{$size__thumbtack}"});
+	width: $size__thumbtack;
+}
+
+/*SECRET
+.content p,
+aside nav a {
+	font-family: Redacted;
+}
+*/

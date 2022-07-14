@@ -1,0 +1,53 @@
+{{- define "main" -}}
+    <!-- TEMPLATE: Shows broken links and pages in need of maintenance. -->
+    {{ .Content }}
+    <div role="presentation" class="columns">
+        {{- $colClass := "column is-one-third-desktop" -}}
+        <section aria-labelledby="missing__title" class="{{- $colClass | safeCSS -}}">
+            <h2 id="missing__title">{{- i18n "missingPage" 2 -}}</h2>
+            <p class="is-size-7">{{- i18n "missingPageDesc" -}}</p>
+            <code id="code-redlink">hugo new</code>
+            <ul>
+                {{- range .Site.Pages -}}
+                    {{- .Render "_view-redLinks" -}}
+                {{- end -}}
+            </ul>
+        </section>
+        <section aria-labelledby="stubs__title" class="{{- $colClass | safeCSS -}}">
+            {{- $stubLength := .Site.Params.stubLength | default 100 -}}
+            <h2 id="stubs__title">{{- i18n "stub" 2 -}}</h2>
+            {{- with (where .Site.RegularPages "WordCount" "lt" $stubLength) -}}
+                <p class="is-size-7">{{- i18n "stubDesc" $stubLength -}}</p>
+                <ul class="is-size-7">
+                    {{- range . -}}
+                        <li><a href="{{- .RelPermalink -}}">{{ .LinkTitle }}</a> {{ i18n "wordCount" .WordCount }}</li>
+                    {{- end -}}
+                </ul>
+            {{- else -}}
+                <p class="is-size-7">{{- i18n "stubDescOk" -}}</p>
+            {{- end -}}
+        </section>
+        <section aria-labelledby="cleanup__title" class="{{- $colClass | safeCSS -}}">
+            {{- $cleanupTag := .Site.Params.cleanupTag | default "ncleanup" -}}
+            <h2 id="cleanup__title">{{- i18n "needsCleanup" -}}</h2>
+            {{- with (index .Site.Taxonomies.tags (lower $cleanupTag)).Pages -}}
+                <p class="is-size-7">{{- i18n "cleanupDesc" -}}</p>
+                <ul class="is-size-7">
+                    {{- range . -}}
+                        <li><a href="{{- .RelPermalink -}}">{{ .LinkTitle }}</a></li>
+                    {{- end -}}
+                </ul>
+            {{- else -}}
+                <p class="is-size-7">{{- i18n "cleanupDescOk" $cleanupTag -}}</p>
+            {{- end -}}
+        </section>
+    </div>
+{{- end -}}
+
+{{- define "scripts" -}}
+    <!-- @TODO did local version not work for some reason? -->
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.10/dist/clipboard.min.js"></script>
+    <script>
+        new ClipboardJS('.button-redlink');
+    </script>
+{{- end -}}

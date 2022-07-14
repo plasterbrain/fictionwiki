@@ -1,0 +1,16 @@
+{{ $delta := .later.Sub (.earlier) }}
+{{ $fullHours := int $delta.Hours }}
+{{ $hours := mod $fullHours 24 }}
+{{ $days := int (div (sub $fullHours $hours) 24) }}
+{{ $mins := sub ($delta.Minutes) (mul $days 1440) }}
+{{ $mins := int (sub $mins (mul $hours 60)) }}
+{{- if gt $days 0 -}}
+{{- printf "%d days" $days -}}{{- if gt $hours 0 -}},&nbsp;{{- end -}}
+{{- end -}}
+{{- if gt $hours 0 -}}
+{{- printf "%d hours" $hours -}}
+{{- if gt $mins 0 -}},&nbsp;and&nbsp;{{- end -}}
+{{- end -}}
+{{- if gt $mins 0 -}}
+{{- printf "%d minutes" $mins -}}
+{{- end -}}

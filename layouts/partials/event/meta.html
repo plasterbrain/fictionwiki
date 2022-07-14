@@ -1,0 +1,23 @@
+<dl class="taxonomy taxonomy-terms-article">
+	{{ with $.Param "location" }}
+	<dt class="taxonomy-title is-inline">Location:</dt>
+	<dd class="taxonomy-term is-inline ml-1">
+		<a href="">{{ . }}</a>
+	</dd>
+	<br />
+	{{ end }}
+	{{ with .Param "characters" }}
+	<dt class="taxonomy-title is-inline">Characters:</dt>
+	<dd class="taxonomy-terms is-inline ml-1">
+		<ul class="tags is-inline m-0">
+		{{ range . }}
+			<li class="tag">
+				<a class="taxonomy-term" href="/characters/{{ . | urlize }}">
+					{{ . }}
+				</a>
+			</li>
+		{{ end }}
+		</ul>
+	</dd>
+	{{- end -}}
+</dl>

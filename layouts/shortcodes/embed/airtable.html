@@ -1,0 +1,12 @@
+{{- if .Get "ID" }}
+    {{- $id := .Get "ID" -}}
+    {{- $controls := .Get "Controls" | default false -}}
+    {{- $controls = cond $controls "on" "off" -}}
+    {{- $color := .Get "Color" | default "grayLight" -}}
+    {{- $card := "" -}}
+    {{- if (.Get "Card") -}}{{- $card = "&layout=card" -}}{{- end -}}
+    {{- with .Get "Full" }}
+        <a class="button" href="{{ . }}">{{ i18n "viewTable" 1 }}</a>
+    {{- end }}
+    <iframe class="airtable-embed" src="https://airtable.com/embed/{{ $id }}?backgroundColor={{ $color }}&viewControls={{ $controls }}{{ $card }}" frameborder="0" onmousewheel="" width="100%" height="533" style="background: transparent; border: 1px solid #ccc;"></iframe>
+{{- end }}

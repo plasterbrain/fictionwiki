@@ -1,0 +1,31 @@
+{{- define "sidebar2" }}
+	{{ partial "sidebar/nav-toc.html" . }}
+	{{- $page := . -}}
+	{{- $notThisPage := where .CurrentSection.Pages "Permalink" "ne" $page.Permalink -}}
+	
+	<!-- Characters in same stories -->
+	{{- $otherChars := $notThisPage }}
+	{{- with where $otherChars "Params.Stories" "intersect" $page.Params.Stories -}}
+		{{- range $page.Params.Stories }}
+			<!-- Change to search $otherChars to avoid repeating -->
+			{{- $sameStoryChars := where $notThisPage "Params.Stories" "intersect" (slice .) -}}
+			
+			{{ $story := $.Site.GetPage . }}
+			{{ partial "sidebar/nav-generic.html" (dict "pages" (shuffle $sameStoryChars) "label" $story.LinkTitle ) }}
+			{{- $otherChars = $otherChars | complement $sameStoryChars -}}
+		{{- end }}
+	{{ end }}
+	
+	<!-- Characters in whatever category -->
+	{{- with where $notThisPage "Params.Categories" "intersect" .Params.Categories -}}
+		{{ range $page.Params.Categories }}
+			{{ partial "sidebar/nav-generic.html" (dict "pages" (where $otherChars "Params.Categories" "intersect" (slice .)) "label" .) }}
+		{{ end }}
+		{{- $otherChars = $otherChars | complement . -}}
+	{{- end -}}
+
+	<!-- More characters not mentioned yet! -->
+	{{- with $otherChars }}
+		{{ partial "sidebar/nav-generic.html" (dict "pages" (first 5 .) "label" ( i18n "character")) }}
+	{{- end }}
+{{- end }}

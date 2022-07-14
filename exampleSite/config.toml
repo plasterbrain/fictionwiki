@@ -1,0 +1,46 @@
+#  __  __  _  _  ___  __  __ 
+# / _)/  \( \( )(  _)(  )/ _)
+#( (_( () ))  (  ) _) )(( (/\
+# \__)\__/(_)\_)(_)  (__)\__/
+# Copy this file into your main wiki
+# directory and edit the values.
+
+title = "YOUR WIKI NAME"
+copyright = "You!"
+DefaultContentLanguage = "en" # Lowercase language code.
+newContentEditor = "codium"   # Path name for your IDE.
+#titleCaseStyle = "AP"             # Also accepts "Chicago" or "Go"
+
+#----------------------------------------------------------------------------
+baseURL = "/"
+theme = "fictionwiki"
+enableEmoji = true
+sectionPagesMenu = "main"
+refLinksErrorLevel = "WARNING"
+enableInlineShortcodes = true
+#----------------------------------------------------------------------------
+
+[taxonomies]
+subplot = "subplots"
+category = "categories"
+tag = "tags"
+
+[params]
+cleanupTag = "ncleanup" # Tag used to mark pages as needing cleanup
+fontHeading = "" # For local wikis, this can be any font on your computer.
+highlightKeywords = [ "TODO", "IDEA", "NOTE" ]
+stubLength = 50 # Pages with less than this many words are marked as stubs.
+unsplashAccessKey = "" # https://unsplash.com/developers
+# @TODO: ???
+freezeDate = 2020-01-01T00:00:00.000Z
+freezeWeekday = 4
+
+[markup.tableOfContents]
+ordered = true
+endLevel = 4
+
+[markup.goldmark.render]
+unsafe = true
+
+[frontmatter]
+date = ["birthday", ":default"]

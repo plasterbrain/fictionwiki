@@ -1,0 +1,9 @@
+{{- define "sidebar2" }}
+	{{- if ne .FirstSection .CurrentSection }}
+		{{- $pages := (where .Pages "Kind" "section") -}}
+		{{- $pages = cond (gt 0 (len $pages)) $pages .Pages }}
+		{{ partial "sidebar/nav-generic.html" (dict "pages" $pages "label" .Title ) }}
+	{{- else }}
+		{{ partial "sidebar/nav-generic.html" (dict "pages" (where .Pages "Kind" "section") "label" (i18n "section") ) }}
+	{{- end }}
+{{- end }}

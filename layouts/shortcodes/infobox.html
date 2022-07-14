@@ -1,0 +1,47 @@
+{{- $kind := .Get 0 | default "character" -}}
+{{- $params := .Page.Params -}}
+<section id="infobox" aria-label='{{ i18n "infobox" 1 }}' class="infobox column is-half-desktop is-two-fifths-widescreen ml-4 ml-0-mobile box is-pulled-right">
+    {{- partial "infobox/image" . -}}
+    {{- with index $.Site.Data.infobox $kind -}}
+        {{- $sections := . -}}
+        {{- range $sections -}}
+            {{- $section := . -}}
+            {{- range $section -}}
+                {{- $title := false -}}
+                {{- with index . "title" -}}
+                    {{- $title = i18n . | default . -}}
+                {{- end -}}
+                {{- $isMap := index . "isMap" | default false -}}
+                {{- $canBeMap := false -}}
+                {{- $fields := slice -}}
+                {{- range index . "fields" -}}
+                    {{- $k := index . "id" -}}{{- $n := index . "n" -}}
+                    {{- $label := (i18n $k $n) | default $k -}}
+                    {{- $value := $.Site.Params.infoboxDefaultValue | default "?" -}}
+                    {{- $link := false -}}
+                    {{- if index $params $k -}}
+                        {{- $canBeMap = true -}}
+                        {{- $value = index $params $k -}}
+                        {{- $link = index . "link" | default false -}}
+                    {{- end -}}
+
+                    {{- if and (ne $value "?") (eq $k "birthday") -}}
+                        {{- with partial "infobox/func_birthday.html" (dict "Birthday" $value) -}}
+                            {{- $value = . -}}
+                        {{- end -}}
+                    {{- end -}}
+                    {{- if eq (printf "%T" $value) "string" -}}
+                        {{- $transValue := (index . "transValue") | default false -}}
+                        {{- $value = cond $transValue (i18n $value 1 | default $value) $value -}}
+                    {{- else -}}
+                    {{- end -}}
+
+                    {{- $props := (slice $label $value) -}}
+                    
+                    {{- $fields = $fields | append (dict "Label" $label "Value" $value "Link" $link) -}}
+                {{- end -}}
+                {{- partial "infobox/section" (dict "Title" $title "Fields" $fields "IsMap" (and $isMap $canBeMap)) -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+</section>

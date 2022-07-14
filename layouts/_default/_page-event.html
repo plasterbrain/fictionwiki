@@ -1,0 +1,32 @@
+{{- define "main" }}
+	<footer class="article-meta mb-5">
+		<time class="is-block is-size-5 my-3" datetime="{{  $.Date.Format "2006-01-02" }}">
+			{{ .Date.Format "1/2/2006, 3:04pm" }}
+			{{- if .Params.endTime -}}
+				{{- $endTime := print "2006-01-02T" .Params.endTime -}}
+
+				<!-- Hacky way around missing seconds ":00" -->
+				{{- if le (len (findRE ":" $endTime)) 1 -}}
+					{{- $endTime = print $endTime ":00" -}}
+				{{- end -}}
+				
+				-{{- (time $endTime).Format "3:04pm" -}}
+			{{- else if .Params.endDate -}}
+				-{{- (time .Params.endDate).Format "1/2/2006, 3:04pm" -}}
+			{{- end -}}
+		</time>
+		{{ partial "event/meta.html" . }}
+	</footer>
+	{{ .Content }}
+	<aside>
+		{{ partial "event/adjacent.html" . }}
+	</aside>
+{{- end }}
+
+{{- define "sidebar2" }}
+	{{- $page := . -}}
+	<!-- Events In This Subplot -->
+	{{- partialCached "sidebar/nav-generic.html" (dict "Pages" .CurrentSection.Pages "Label" .CurrentSection.Title "Ascending" true "ShowDate" true "Limit" 5 "Link" "../") .CurrentSection }}
+
+	<!-- More Subplots @TODO ? -->
+{{- end }}

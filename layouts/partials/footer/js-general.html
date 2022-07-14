@@ -1,0 +1,14 @@
+{{- $js := print .Script ".js" -}}
+{{- $js = resources.Get (path.Join "js/" $js) -}}
+{{- if $js -}}
+    {{- $minify := .Minify -}}
+    {{- $maps := cond (eq $minify true) "inline" "" -}}
+    {{- $options := dict "minify" $minify "sourceMap" $maps "format" "iife" -}}
+    {{- with .Params -}}
+        {{- $options = merge $options (dict "params" .) -}}
+    {{- end -}}
+    {{- $js = $js | js.Build $options -}}
+    <script>
+        {{ $js.Content | safeJS }}
+    </script>
+{{- end }}

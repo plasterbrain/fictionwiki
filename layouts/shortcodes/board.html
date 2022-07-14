@@ -1,0 +1,14 @@
+{{- if len .Inner -}}
+    <!-- SHORTCODE: Idea Board -->
+    {{- $lines := findRE "\\s*[-|1]\\s*(.*)" .Inner -}}
+    {{- .Page.Store.Set "hasMasonry" true -}}
+    <div class="grid" id="grid">
+        {{- range $lines -}}
+            {{- $content := replaceRE "\\s*-\\s*(.*)" "$1" . -}}
+            <div class="box" style="width:30%;">
+                {{ partialCached "icon.html" "thumbtack" "thumbtack" }}
+                {{ $content | markdownify }}
+            </div>
+        {{- end -}}
+    </div>
+{{- end -}}

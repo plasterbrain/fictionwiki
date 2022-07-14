@@ -1,0 +1,9 @@
+{{- $missingParam := .Param | default "Name" -}}
+{{ $path := "" }}
+{{- with .CallingPage.Page.File -}}
+    {{- $path = .Path -}}
+{{- else -}}
+    {{- $path = .CallingPage.Page.Path -}}
+{{- end -}}
+{{- warnf "WARN: `%s` shortcode on %q missing %s parameter." .Shortcode $path $missingParam -}}
+<p class="missing">Heads up: The <b>{{ .Shortcode }}</b> shortcode needs a <code>{{ $missingParam }}</code> parameter to work.</p>

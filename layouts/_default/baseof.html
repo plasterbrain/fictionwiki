@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{ .Title }}</title>
+	{{- partialCached "head/meta-site.html" . -}}
+	{{- partialCached "head/meta-prism.html" . -}}
+</head>
+<body class="is-flex is-flex-direction-column darkmode--activated">
+	<div role="presentation" class="columns is-multiline is-flex-grow-1">
+		<aside id="sidebar" class="column is-full-tablet is-one-fifth-widescreen">
+			{{/* LEFT SIDEBAR */}}
+			{{- block "sidebar1" . -}}
+				{{- partial "header/title.html" . -}}
+				{{- partial "sidebar/nav-site.html" . -}}
+			{{- end -}}
+		</aside>
+		<div role="presentation" id="content"
+			 class="column is-two-thirds-tablet is-three-fifths-widescreen">
+			{{- partial "page/nav-breadcrumbs.html" . -}}
+			{{/* RESOURCES: Where extra page tab content is stored */}}
+			{{- block "resources" . -}}
+				{{- .Page.Store.Set "hasResources" (where .Resources "ResourceType" "page") -}}
+			{{- end -}}
+			{{/* /RESOURCES */}}
+			<main id="main" class="content mt-3">
+			<article aria-labelledby="page__title">
+				<header class="mb-5">
+					<h1 id="page__title" class="title">{{- .Title -}}</h1>
+					{{- with .Description }}
+						<p class="subtitle is-size-5">{{- . | markdownify -}}</p>
+					{{- end }}
+				</header>
+				{{- with (.Page.Store.Get "hasResources") }}
+					{{- partial "page/nav-resources.html" . -}}
+				{{- end }}
+				<div role="tabpanel"
+					 id="content-main"
+					 class="tab__content"
+					 data-toc="toc-main"
+					 {{ if (.Page.Store.Get "hasResources" ) }}style="display:none;"{{- end -}}>
+					{{/* MAIN: Main page content */}}
+					{{- block "main" . }}
+						<h2 class="is-sr-only">
+							{{- i18n "main" -}}
+						</h2>
+						{{- .Content }}
+					{{- end }}
+					{{/* /MAIN */}}
+
+					<footer>
+						{{/* SUBPAGES: Main page content */}}
+						{{- block "subpages" . }}
+							{{- partial "page/nav-subpages.html" . -}}
+						{{- end }}
+						{{/* /SUBPAGES */}}
+					</footer>
+				</div>
+				{{- range .Page.Store.Get "hasResources" }}
+					{{- $title := .LinkTitle | urlize -}}
+					<div role="tabpanel"
+						 id="content-{{- $title -}}"
+						 data-toc="toc-{{- $title -}}"
+						 aria-labelledby="{{- $title -}}__title"
+						 class="tab__content" style="display:none;">
+						<h2 id="{{- $title -}}__title">{{ .Title }}</h2>
+						{{- with .Description -}}
+							<p class="is-size-5">{{- . -}}</p>
+						{{- end -}}
+						{{- .Content }}
+					</div>
+				{{- end }}
+			</article>
+			</main>
+		</div>
+		<aside class="column is-one-fifth-widescreen is-one-third-tablet">
+			<div role="presentation" class="is-hidden-touch is-hidden-desktop-only mb-3">
+				{{- partialCached "sidebar/pagecount.html" . -}}
+			</div>
+			{{- partial "sidebar/button-edit.html" . -}}
+			{{- partial "sidebar/button-print.html" . -}}
+			{{- if (.Site.Params.debug | default false) }}
+				<p class="is-size-7 my-2 is-family-monospace">
+					Type: {{ .Type }}<br/>
+					Kind: {{ .Kind }}<br/>
+					Section: {{ .Section }}<br/>
+					FirstSection: {{ .FirstSection.Title }}<br/>
+					CurrentSection: {{ .CurrentSection.Title }}<br/>
+					Parent: {{ .Parent }}
+				</p>
+			{{- end }}
+			<!-- SIDEBAR2: Right Sidebar Menus -->
+			{{- block "sidebar2" . }}{{- end }}
+		</aside>
+	</div>
+	{{- .Page.Store.Set "hasPrint" false -}}
+	{{- partialCached "footer/colophon.html" . -}}
+	{{- block "scripts" . -}}
+		{{- partial "footer/scripts.html" . -}}
+	{{- end }}
+</body>
+
+</html>

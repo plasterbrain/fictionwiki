@@ -1,0 +1,4 @@
+{{- with resources.Get "css/prism.css" }}
+    {{ $style := . | resources.Minify }}
+    <link rel="stylesheet" href="{{ $style.Permalink }}">
+{{- end }}

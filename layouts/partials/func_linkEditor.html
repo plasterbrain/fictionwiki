@@ -1,0 +1,2 @@
+{{- $protocol := "vscodium://file/" -}}<!-- @TODO -->
+{{- return (print $protocol (path.Join (os.Getenv "HUGO_PATH") (or .Site.Params.ContentDir "content"))) -}}

@@ -1,0 +1,11 @@
+{{- with .Page.Params.Image }}
+    {{ $unsplash := "https://unsplash.com/photos/" }}
+    {{ if in . $unsplash }}
+        {{ $url := replace (print . "/500x300") $unsplash "https://source.unsplash.com/" }}
+        {{- with resources.GetRemote $url }}
+            <img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="">
+        {{- end }}
+    {{ else }}
+        <img src="{{ . }}" alt="">
+    {{ end }}
+{{- end }}

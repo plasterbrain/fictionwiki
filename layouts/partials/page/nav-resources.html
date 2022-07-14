@@ -1,0 +1,18 @@
+<div role="tablist" id="tabs-page" class="tabs is-boxed {{ if gt (len .) 4 }}is-small{{ end }}" aria-label='{{ i18n "subpages" }}'>
+    <ul class="m-0">
+        {{- $tabs := slice (dict "LinkTitle" (i18n "main")) | append . -}}
+        {{- range $tabs }}
+        {{- $title := .LinkTitle | urlize -}}
+        <li>
+            <button role="tab"
+                    id="tab-{{- $title -}}"
+                    aria-selected="true"
+                    aria-controls="content-{{- $title -}}"
+                    data-toc="toc-{{- $title -}}"
+                    class="tab">
+                    {{- .LinkTitle -}}
+            </button>
+        </li>
+        {{- end }}
+    </ul>
+</div>

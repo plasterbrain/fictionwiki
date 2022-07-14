@@ -1,0 +1,9 @@
+{{- $paged := resources.Get "js/paged.js" -}}
+{{- if $paged -}}
+    {{- $paged = $paged | js.Build (dict "minify" true) -}}
+    {{- $print := resources.Get "js/print.js" -}}
+    {{- $print = $print | js.Build (dict "minify" false "params" (dict "pagedjs" $paged.Permalink)) -}}
+    <script>
+        {{ $print.Content | safeJS }}
+    </script>
+{{- end }}

@@ -1,0 +1,39 @@
+<nav aria-labelledby="menu-{{ .Label | urlize }}--title" class="menu mb-3">
+	{{- $link := .Link | default "../" -}}
+	<h3 id="menu-{{ .Label | urlize }}--title" class="menu-label">
+		{{- if .Link -}}<a href="{{ $link }}">{{- end -}}
+			{{ .Label | safeHTML }}
+		{{- if .Link -}}</a>{{- end -}}
+	</h3>
+	{{- if .Pages -}}
+		{{- $pages := .Pages -}}
+		{{- $showDate := .ShowDate -}}
+		{{- $limit := .Limit -}}
+		{{- if .Ascending -}}
+			{{- $pages = .Pages.Reverse -}}
+		{{- end -}}
+		{{- if $limit -}}
+			{{- $pages = first $limit $pages -}}
+		{{- end -}}
+		<ol class="menu-list is-size-7" style="list-style: none;">
+			{{- range $pages }}
+				<li class="menu-item">
+					<a href="{{ .Permalink }}">
+						{{- .LinkTitle -}}
+						{{- if $showDate -}}
+						<span class="is-block is-italic is-family-secondary mt-1" style="opacity:.8;">{{ .Date.Format "1/2/2006, 3:04pm" }}</span>
+						{{- end -}}
+					</a>
+				</li>
+			{{- end }}
+		</ol>
+		{{- if $limit -}}
+			{{- $remaining := sub (len .Pages) $limit -}}
+			{{- if gt $remaining 0 -}}
+				<a class="is-size-7" href="{{ $link }}">{{- i18n "andXMore" $remaining -}}</a>
+			{{- end -}}
+		{{- end -}}
+	{{- else }}
+		<p class="is-size-7 mb-4">{{ i18n "none" }}</p>
+	{{- end }}
+</nav>

@@ -1,0 +1,60 @@
+{{- $name := cond .IsNamedParams (.Get "Name") (.Get 0) -}}
+{{- if not $name -}}
+	{{ partialCached "shortcodeError.html" (dict "CallingPage" . "Shortcode" "skill") "skill" }}
+{{- else -}}
+    {{- $skillTitleId := print "title-" ($name | urlize) -}}
+    {{- $dtClass := "" -}}
+    {{- $ddClass := "" -}}
+    {{- $desc := .Get 1 -}}
+    {{- $link := "" -}}
+    {{- $linkEnd := "" -}}
+    {{- with (where site.RegularPages "File.TranslationBaseName" ($name | urlize)) -}}
+        {{- $page := index . 0 -}}
+        {{- $link = print "<a href='" $page.RelPermalink "'>" -}}
+        {{- $linkEnd = "</a>" -}}
+        {{- $desc = $page.Description -}}
+    {{- else -}}
+        {{- $name = $name | humanize | title -}}
+        {{- if .IsNamedParams -}}
+            {{- $desc = .Get "Desc" -}}
+        {{- end -}}
+    {{- end -}}
+    <div role="presentation" class="container">
+        <div role="presentation" class="notification">
+            <h4 id="{{- $skillTitleId -}}">
+                {{- $link | safeHTML -}}{{- $name -}}{{- $linkEnd | safeHTML -}}
+            </h4>
+            {{- with $desc }}
+                <p class="subtitle">{{- . -}}</p>
+            {{- end }}
+            <dl aria-labelledby="{{- $skillTitleId -}}">
+                <dt class="{{- $dtClass | safeCSS -}}">
+                    {{- i18n "skillLevel" 1 -}}
+                </dt>
+                <dd class="{{- $ddClass | safeCSS -}}">
+                    {{- with (cond .IsNamedParams (.Get "Level") (.Get 2)) -}}
+                        {{- strings.Repeat (int .) "⭐" -}}
+                    {{- else -}}
+                        {{- i18n "na" -}}
+                    {{- end -}}
+                </dd>
+                {{- with (cond .IsNamedParams (.Get "Specialty") (.Get 3)) }}
+                    <dt class="{{- $dtClass | safeCSS -}}">
+                        {{- i18n "specialty" 2 -}}
+                    </dt>
+                    <dd class="{{- $ddClass | safeCSS -}}">
+                        {{- . -}}
+                    </dd>
+                {{- end }}
+                {{- with (cond .IsNamedParams (.Get "Weakness") (.Get 3)) }}
+                    <dt class="{{- $dtClass | safeCSS -}}">
+                        {{- i18n "weakness" 1 -}}
+                    </dt>
+                    <dd class="{{- $ddClass | safeCSS -}}">
+                        {{- . -}}
+                    </dd>
+                {{- end }}
+            </dl>
+        </div>
+    </div>
+{{- end -}}

@@ -1,0 +1,56 @@
+<h3 id="timeline-vertical__title" class="is-sr-only">
+    {{- i18n "timeline" . -}}
+</h3>
+<ol class="timeline mx-0" type="none">
+{{- range .Years }}
+    {{- $months := (.Pages.GroupByDate "1").Reverse -}}
+    {{- $yearTitleID := print "timeline-vertical-" (string .Key) "__title" -}}
+    <li>
+        <h3 id="{{- $yearTitleID | safeHTMLAttr -}}" class="is-size-6">
+            {{ .Key }}
+        </h3>
+        <ol aria-labelledby="{{- $yearTitleID | safeHTMLAttr -}}" class="timeline" type="none">
+        {{- range $months -}}
+            {{- $days := (.Pages.GroupByDate "2").Reverse -}}
+            {{- $monthName := i18n (printf "month%s" .Key) -}}
+            {{- $monthTitleID := replace $yearTitleID "_" (print .Key "_") -}}
+            <li class="timeline-header mb-2">
+                <h4 id="{{- $monthTitleID | safeHTMLAttr -}}" class="is-size-6">
+                    {{- $monthName }}
+                </h4>
+                <ol aria-labelledby="{{- $monthTitleID | safeHTMLAttr -}}" class="timeline mx-0" type="none">
+                {{- range $days }}
+                    <li class="timeline__day columns">
+                        {{/* @TODO subplot-colored bg? */}}
+                        <header class="column is-flex is-one-third has-text-weight-light is-label is-align-items-center has-background-black is-capitalized">
+                            {{/* @TODO i18n this format */}}
+                            {{- printf "%[1]s %[2]s" $monthName (.Key | humanize) -}}
+                        </header>
+                        <ol class="column m-0 timeline__events" type="none">
+                        {{- range .Pages }}
+                            <li>
+                                <article class="timeline-content">
+                                    <header class="mt-0 mb-1 is-uppercase is-size-7" style="letter-spacing:1px;">
+                                        {{- .Date.Format "3:04pm" }}
+                                        <a href="{{ .RelPermalink }}">
+                                            {{- .Title -}}
+                                        </a>
+                                    </header>
+                                    {{- with .Param "description" }}
+                                        <p class="mt-2 is-size-7">
+                                            {{- . | safeHTML | truncate 250 -}}
+                                        </p>
+                                    {{- end }}
+                                </article>
+                            </li>
+                        {{- end }}
+                        </ol>
+                    </li>
+                {{- end -}}
+                </ol><!-- /Days list -->
+            </li><!-- /Month -->
+        {{- end -}}
+        </ol><!-- /Months List -->
+    </li><!-- /Year -->
+{{- end -}}{{/* /End Range: .Years */}}
+</ol>

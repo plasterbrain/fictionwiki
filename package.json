@@ -1,0 +1,12 @@
+{
+	"devDependencies": {
+		"@creativebulma/bulma-divider": "^1.1.0",
+		"@creativebulma/bulma-tooltip": "^1.2.0",
+		"@fristys/masonry": "^1.1.7",
+		"bulma": "^0.9.4",
+		"html2pdf.js": "^0.10.1",
+		"jspdf": "^2.5.1",
+		"leaflet": "^1.8.0",
+		"prismjs": "^1.28.0"
+	}
+}

@@ -1,0 +1,6 @@
+{{- $birthday := (findRE "(?:[0-9]){4}-(?:[0-9]){2}-(?:[0-9]){2}" .Birthday 1) -}}
+{{- if $birthday -}}
+    {{- $ages := "" -}}
+    {{- $birthday = time (index $birthday 0) -}}
+    {{- return (printf "%s %d" (i18n (printf "month%d" $birthday.Month)) $birthday.Day) -}}
+{{- end -}}

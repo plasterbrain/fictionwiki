@@ -1,0 +1,82 @@
+@charset "utf-8";
+$family-primary: Lato;
+$scheme-main: #1d1d1d;
+$scheme-main-bis: #0c0c0c;
+$background: #363636;
+$box-background-color: #222; //#39332e
+$pre-background: $box-background-color;
+$menu-item-active-background-color: darken($scheme-main, 1%);
+$text: #a7a7a7;
+$border: #404040;
+$link: #cf7928;
+$link-hover: lighten($link, 20%);
+$pre: #b7b9ac;
+$code: $pre;
+$button-hover-color: lighten($text, 20%);
+$button-text-hover-background-color: lighten($background, 10%);
+$text-strong: $text;
+$title-color: $text;
+$menu-list-link-padding: .2rem;
+
+@import "bulma/bulma.sass";
+@import "@creativebulma/bulma-divider/src/sass/index.sass";
+@import "@creativebulma/bulma-tooltip/src/sass/index.sass";
+@import "modules/progress";
+
+.tabs {
+    ul {
+        flex-wrap: wrap;
+        max-width: 100%;
+    }
+    .tab {
+        align-items: center;
+        border-width: 0 0 1px 0;
+        border-bottom-color: $tabs-border-bottom-color;
+        border-bottom-style: $tabs-border-bottom-style;
+        border-bottom-width: $tabs-border-bottom-width;
+        color: $tabs-link-color;
+        display: flex;
+        justify-content: center;
+        margin-bottom: -#{$tabs-border-bottom-width};
+        padding: $tabs-link-padding;
+        vertical-align: top;
+        cursor: pointer;
+        background: none;
+            font-size: unset;
+        &:hover {
+            border-bottom-color: $tabs-link-hover-border-bottom-color;
+            color: $tabs-link-hover-color;
+        }
+    }
+
+    .is-active {
+        .tab {
+            border-bottom-color: $tabs-link-active-border-bottom-color;
+            color: $tabs-link-active-color;
+        }
+    }
+    &.is-boxed {
+        .tab {
+            border: 1px solid transparent;
+            border-radius: $tabs-boxed-link-radius $tabs-boxed-link-radius 0 0;
+            &:hover {
+                background-color: $tabs-boxed-link-hover-background-color;
+                border-bottom-color: $tabs-boxed-link-hover-border-bottom-color;
+            }
+        }
+        .is-active {
+            .tab {
+                background-color: $tabs-boxed-link-active-background-color;
+                border-color: $tabs-boxed-link-active-border-color;
+                border-width: 1px;
+                border-bottom-color: $tabs-boxed-link-active-border-bottom-color !important;
+            }
+        }
+    }
+}
+
+@include mobile {
+    .ml-0-mobile {
+        margin-left: 0 !important;
+    }
+}

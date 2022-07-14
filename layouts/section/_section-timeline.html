@@ -1,0 +1,17 @@
+{{- define "main" }}
+    {{- with (where .Pages "Kind" "section") }}
+    <ol type="i" class="columns is-multiline" aria-label='{{ i18n "subpage" }}'>
+        {{- $i := 1 -}}
+        {{- range . }}
+        <li class="column is-one-third is-half-tablet">
+            <article>
+                <h1 class="is-size-5 has-text-weight-normal">{{ $i }}. {{ .Title }}</h1>
+                <p class="is-size-7">{{ .Description }}</p>
+            </article>
+        </li>
+        {{- $i = add $i 1 -}}
+        {{- end }}
+    </ol>
+    {{- end }}
+    {{- partial "page/timeline.html" (dict "Events" (where .RegularPagesRecursive "Type" "event") "CurrentPage" .) -}}
+{{- end }}

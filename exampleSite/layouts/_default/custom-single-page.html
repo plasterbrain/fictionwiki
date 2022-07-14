@@ -1,0 +1,35 @@
+{{- define "main" }}
+    <!-- Main Content Area -->
+    {{ .Content }} <!-- Page Text -->
+{{- end }}
+
+{{- define "sidebar1" }}
+    <!-- Left Sidebar -->
+{{- end }}
+
+{{- define "sidebar2" }}
+    <!-- Right Sidebar -->
+    {{ partial "sidebar/nav-toc.html" . }} <!-- Table of Contents -->
+    {{ partial "sidebar/nav-generic.html"
+        (dict "Pages" (where .Parent.Pages "Kind" "page")
+              "Label" (i18n "menu" 1)) }}
+{{- end }}
+
+{{- define "scripts" }}
+    <!-- Put JS files under projectname/static and link to them like this: -->
+    <!-- <script src="http://{server-url}/script-name.js"></script> -->
+
+    <!-- Or write some inline Javascript: -->
+    <!-- <script>console.log("Hip hip hooray!");</script> -->
+{{- end }}
+
+{{- define "subpages" }}
+    <!-- List related content or child pages here: -->
+    {{- partial "page/nav-subpages.html" . -}}
+{{- end }}
+
+{{- define "resources" }}
+    <!-- ADVANCED - Set the pages that will be used for tab content: -->
+    {{- .Page.Store.Set "hasResources"
+        (where .Resources "ResourceType" "page") -}}
+{{- end }}

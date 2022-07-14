@@ -1,0 +1,15 @@
+name = "fictionwiki"
+license = "MIT"
+licenselink = "https://github.com/plasterbrain/fictionwiki/blob/master/LICENSE"
+description = "Hugo theme for making a local worldbuilding wiki."
+
+homepage = "https://github.com/plasterbrain/fictionwiki"
+
+tags = []
+features = []
+
+min_version = "0.93.0"
+
+[[author]]
+name = "plasterbrain"
+homepage = "https://plasterbrain.com"

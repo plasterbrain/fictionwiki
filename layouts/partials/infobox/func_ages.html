@@ -1,0 +1,20 @@
+{{- $count := 1 -}}
+{{- with .Page.Params.appearsIn -}}
+    {{- range $story := . -}}
+        {{- $story = where site.Pages "LinkTitle" .Page -}}
+        {{- if $story -}}
+            {{- with (index $story 0).Params.date -}}
+                {{- with (time .) -}}
+                    {{- if gt $count 1 -}}
+                        <!-- Separate consecutive entries in the list -->
+                        {{- $ages = printf "%s, " $ages -}}
+                    {{- end -}}
+                    {{- $storyAge := partial "event/func_dateDiff.html" (dict "year2" .Year "year" .Birthday.Year "month2" (printf "%d" .Month) "month" (printf "%d" .Birthday.Month) "day2" .Day "day" .Birthday.Day) -}}
+                    {{- $storyAge = printf "%d (%s)" $storyAge.years $story.LinkTitle -}}
+                    {{- $ages = printf "%s%s" $ages $storyAge }}
+                    {{- $count = add $count 1 -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}

@@ -1,0 +1,10 @@
+<nav class="navbar" aria-label='{{ i18n "navMain" }}'>
+    {{- $currentPage := .Current -}}
+    {{- $isCurrent := false -}}
+    {{- range .Site.Menus.main }}
+        {{- $isCurrent = or ($currentPage.IsMenuCurrent " main" .) ($currentPage.HasMenuCurrent "main" .) -}}
+        <a class='navbar-item{{ if $isCurrent }} is-active{{ end }}' href="{{ .URL }}"{{ if $isCurrent }} aria-current="page"{{ end }}>
+            {{ .Name }}
+        </a>
+    {{- end }}
+</nav>

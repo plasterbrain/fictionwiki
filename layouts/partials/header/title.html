@@ -1,0 +1,5 @@
+{{- if .IsHome }}
+    <h1 class="title mb-2">{{ .Site.Title }}</h1>
+{{- else }}
+    <p class="title mb-2"><a href="/">{{ .Site.Title }}</a></p>
+{{- end }}

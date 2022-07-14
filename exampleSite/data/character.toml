@@ -1,0 +1,14 @@
+[[section]]
+# name = "" # Omitting this field will hide any title
+fields = [
+    {id="name", n=1}, # Translates to singular "Name"
+    {id="favFruit", n=1},
+]
+
+[[section]]
+name = "pet" # Section titles are plural by default @TODO?
+fields = [
+    {id="name", n=2},
+    {id="species", n=1},
+    {id="interest", n=2}, #Translates to plural "Likes"
+]

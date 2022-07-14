@@ -1,0 +1,13 @@
+{{- $name := .Get 0 -}}
+{{- $list := index $.Site.Data.key $name -}}
+{{- $keyScratch := newScratch -}}
+{{ if $list }}
+	{{- range $k, $v := $list }}
+		{{ $keyScratch.SetInMap "list" $v $k }}
+	{{- end }}
+	<dl>
+		{{- range $keyScratch.GetSortedMapValues "list" }}
+			<dt class="is-inline ml-2">{{ . }}</dt><dd class="is-inline ml-2">{{ index $list . }}</dd>
+		{{- end }}
+	</dl>
+{{ end }}

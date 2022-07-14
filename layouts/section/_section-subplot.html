@@ -1,0 +1,14 @@
+{{- define "main" }}
+    {{- .Content -}}
+	{{- if .File -}}
+		{{- $events := .RegularPages | union (where $.Site.RegularPages "Params.Subplots" "intersect" (slice .File.ContentBaseName)) -}}
+        {{ partial "page/timeline.html" (dict "CurrentPage" . "Events" $events) }}
+	{{- end -}}
+{{- end }}
+
+{{- define "subpages" -}}<!-- -->{{- end -}}
+
+{{- define "sidebar2" }}
+	{{ partial "sidebar/nav-generic.html" (dict "Pages" (where .Parent.Pages "Kind" "page") "Label" (i18n .Parent.Params.sectionName)) }}
+	{{ partial "sidebar/nav-generic.html" (dict "Pages" (where .Parent.Pages "Kind" "section") "Label" (i18n "subplot")) }}
+{{- end }}

@@ -1,0 +1,21 @@
+{{- define "sidebar2" }}
+	{{- $pages := .Pages -}}
+	{{- $others := first 5 (where .Parent.Pages "Permalink" "ne" .Permalink) -}}
+	<nav class="menu">
+		<ul class="menu-list">
+			<!-- Places/cities (subpages) -->
+			{{ partial "sidebar/nav-generic.html" (dict "pages" .Pages "label" (i18n "xInY" (dict "items" (i18n "place") "title" .LinkTitle)) ) }}
+			<!-- Characters from this country -->
+			{{- if .File -}}
+				{{- $chars := shuffle (where (where .Site.Pages "Section" "characters") "Params.Country" (.File.ContentBaseName | title)) -}}
+				{{ partial "sidebar/nav-generic.html" (dict "pages" (first 5 $chars) "label" (i18n "xFromY" (dict "items" (i18n "character") "title" .LinkTitle))) }}
+				{{- if gt $chars 5 }}
+					<!-- @TODO link this if I figure out how to make nonexistent taxonomy pages -->
+					<p class="is-size-7 mb-4">{{ i18n "andXMore" (sub (len $chars) 5) }}</p>
+				{{- end }}
+			{{- end -}}
+			<!-- More countries (sibling pages/sections) -->
+			{{ partial "sidebar/nav-generic.html" (dict "pages" $others "label" (i18n "moreX" (i18n "country"))) }}
+		</ul>
+	</nav>
+{{- end }}

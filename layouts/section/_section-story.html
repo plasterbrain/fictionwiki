@@ -1,0 +1,37 @@
+{{- define "resources"}}
+	{{ $slug := .Title | urlize }}
+	{{- with .File -}}
+		{{- $slug = .ContentBaseName -}}
+	{{- end -}}
+	
+	<!-- TODO make "tabs" a site option -->
+	{{- $notes := .Site.GetPage (
+		printf "%s/%s/tabs" (.Section | urlize) $slug ) -}}
+		
+	{{- if $notes -}}
+		{{- $notes = $notes.Resources.Match "*.md" -}}
+		{{ .Page.Store.Set "hasResources" $notes }}
+	{{- end -}}
+{{- end }}
+
+{{- define "main" }}
+	{{ .Content }}
+	{{- partial "page/timeline.html" (dict "Events" (where .RegularPagesRecursive "Type" "event") "CurrentPage" .) -}}
+{{- end }}
+
+{{- define "subpages" -}}<!-- -->{{- end -}}
+
+{{- define "sidebar2" }}
+	{{ partial "sidebar/nav-toc.html" . }}
+	<!-- Chapters/Episodes (first-level subpages) -->
+	{{- $secName := cond (eq .FirstSection .Parent) .Params.sectionName .Parent.Params.sectionName | default "chapter" -}}
+	{{- partial "sidebar/nav-generic.html" (dict "Pages" (where .Pages "Kind" "page") "Label" (i18n $secName)) }}
+
+	<!-- Subplots (first-level sections) -->
+	{{- partial "sidebar/nav-generic.html" (dict "Pages" (where .Pages "Kind" "section") "Label" (i18n "subplot")) }}
+	
+	<!-- Characters in this story -->
+	{{- $slug := "" -}}
+	{{- with .File -}}{{- $slug = .ContentBaseName -}}{{- end -}}
+	{{- partial "sidebar/nav-generic.html" (dict "Pages" (where (where $.Site.Pages "Section" "characters") "Params.appearsIn" "intersect" (slice ($slug | title) $slug)) "Label" (i18n "character") "Limit" 6) }}
+{{- end }}

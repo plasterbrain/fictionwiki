@@ -1,0 +1,19 @@
+{{- define "subpages" }}
+    {{- with (where .Parent.Pages "!=" .) }}
+    <section class="py-5" aria-labelledby="list-subpages--title">
+        <h2 id="list-subpages--title" class="menu-label is-size-6">
+            {{- i18n "related" -}}
+        </h2>
+        <div class="columns is-multiline">
+            {{- range . }}
+            <a class="column is-one-fifth" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+            {{- end }}
+        </div>
+    </section>
+    {{- end }}
+{{- end }}
+
+{{- define "sidebar2" }}
+	{{ partial "sidebar/nav-generic.html" (dict "pages" (where .FirstSection.Pages "Kind" "section") "label" (i18n "typesOfX" (i18n "magic"))) }}
+	{{ partial "sidebar/nav-generic.html" (dict "pages" (where .FirstSection.Pages "Kind" "!=" "section") "label" (i18n "subpage")) }}
+{{- end }}

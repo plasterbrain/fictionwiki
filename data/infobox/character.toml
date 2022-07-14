@@ -1,0 +1,33 @@
+# Infobox: Character
+[[section]]
+fields = [
+    {id="age", n=1},
+    {id="birthday", n=1},
+    {id="gender", n=1, transValue=true},
+    {id="appearsIn", n=1, link="timeline"},
+    {id="status", n=1, transValue=true},
+]
+[[section]]
+title = "physicalTrait"
+fields = [
+    {id="height", n=1},
+    {id="hair", n=1},
+    {id="eye", n=2},
+    {id="species", n=1, link="species"},
+    {id="ethnicity", n=1},
+]
+
+[[section]]
+title = "relationship"
+isMap = true
+fields = [{id="relationship", n=2, link="characters"}]
+
+[[section]]
+title = "favorite"
+fields = [
+    {id="hobby", n=2},
+    {id="food", n=1},
+    {id="color", n=1},
+    {id="animal", n=1},
+    {id="sport", n=1},
+]

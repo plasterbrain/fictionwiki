@@ -1,0 +1,13 @@
+{{- $link := .Get 0 -}}
+<!-- SHORTCODE: Link -->
+{{- $label := .Get 1 -}}
+{{- if .IsNamedParams -}}
+    {{- $link = .Get "Name" -}}
+    {{- $label = .Get "Label" -}}
+{{- end -}}
+{{- with (where .Site.Pages "Title" $link) -}}
+    <a href="{{ . }}">{{ $label }}</a>
+{{- else -}}
+    <a href="/{{ $link }}" class="missing">{{ $label }}</a>
+    <span style="display: none;">{REDLINK}{{- $link -}}</span>
+{{- end -}}

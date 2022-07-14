@@ -1,0 +1,27 @@
+{{- if .Get "ID" }}
+    {{- .Page.Store.Set "hasUnsplash" true -}}
+    {{- $id := .Get "ID" -}}
+    {{- $titleID := print "uc__title-" $id -}}
+    {{- $descID := print "uc__desc-" $id -}}
+    {{- .Page.Store.Set "hasUnsplash" true -}}
+    <div role="presentation">
+        <header class="px-4 pt-4 is-flex is-justify-content-space-between is-align-items-top">
+            <div role="presentation">
+                <h3 class="mt-0 mb-1" id="{{ $titleID }}"></h3>
+                <p id="{{ $descID }}">
+                    <span role="presentation" class="ucc-1" style="display: none;">
+                        {{ i18n "photoCount" 1 | safeHTML }}
+                    </span>
+                    <span role="presentation" class="ucc-other">
+                        {{ i18n "photoCount" 2 | safeHTML }}
+                    </span>
+                </p>
+            </div>
+            {{- with resources.Get "icons/unsplash.svg" -}}
+                <a href="https://unsplash.com/">{{ .Content | safeHTML }}</a>
+            {{- end }}
+        </header>
+        <figure data-id="{{ $id }}" class="unsplash-collection columns is-multiline m-1" aria-labelledby="{{ $titleID }}">
+        </figure>
+    </div>
+{{- end }}
