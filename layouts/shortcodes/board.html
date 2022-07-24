@@ -2,13 +2,17 @@
     <!-- SHORTCODE: Idea Board -->
     {{- $lines := findRE "\\s*[-|1]\\s*(.*)" .Inner -}}
     {{- .Page.Store.Set "hasMasonry" true -}}
-    <div class="grid" id="grid">
-        {{- range $lines -}}
-            {{- $content := replaceRE "\\s*-\\s*(.*)" "$1" . -}}
-            <div class="box" style="width:30%;">
-                {{ partialCached "icon.html" "thumbtack" "thumbtack" }}
-                {{ $content | markdownify }}
-            </div>
-        {{- end -}}
+    <div role="presentation" class="corkboard p-2 my-5">
+        <div class="grid mt-2" id="grid">
+            {{- range $lines -}}
+                {{- $tilt := seq -1 1 | shuffle | first 1 -}}
+                {{- $tilt = print "style='transform: rotate(" (index $tilt 0) "deg);'" -}}
+                {{- $content := replaceRE "\\s*-\\s*(.*)" "$1" . -}}
+                <div class="corkboard__note" {{- $tilt | safeHTMLAttr -}}>
+                    {{ partialCached "icon.html" "thumbtack" "thumbtack" }}
+                    {{ $content | markdownify }}
+                </div>
+            {{- end -}}
+        </div>
     </div>
 {{- end -}}

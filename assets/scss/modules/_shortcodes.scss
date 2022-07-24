@@ -11,6 +11,7 @@ $size__thumbtack: 30px;
 
 .mermaid .label {
     font-weight: normal;
+    font-size: unset;
 
     div {
         text-align: left;
@@ -33,11 +34,37 @@ $size__thumbtack: 30px;
     width: .9rem;
 }
 
+.corkboard {
+    background-image: url("/static/images/cork.png");
+    border-radius: .5rem;
+    border: 15px solid #2f2525;
+
+    .corkboard__note {
+        font-size: .9rem;
+        margin-left: .75rem;
+        padding: 1rem .75rem .75rem;
+        text-align: center;
+        box-shadow: 0 .2rem 1rem rgba(21, 21, 21, 0.5);
+        &:nth-child(4n+1) {
+            background: #351a26; //#ff7eb9
+        }
+        &:nth-child(4n+2) {
+            background: #1a3523; //#ff7eb9
+        }
+        &:nth-child(4n+3) {
+            background: #1d3535; //#7afcff
+        }
+        &:nth-child(4n+4) {
+            background: #393823; //#fff740
+        }
+    }
+}
+
 .icon-thumbtack {
 	height: $size__thumbtack;
 	position: absolute;
 	top: -.5rem;
-	left: calc(#{"50% - #{$size__thumbtack}"});
+	left: calc(#{"54% - #{$size__thumbtack}"});
 	width: $size__thumbtack;
 }
 

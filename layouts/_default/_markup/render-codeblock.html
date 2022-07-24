@@ -1,9 +1,2 @@
-{{- if eq .Type "mermaid" }}
-	{{- .Page.Store.Set "hasMermaid" true -}}
-	<figure class="mermaid m-0 mb-1">
-		{{- (replace .Inner "flowchart" "%%{init: {'themeVariables': { 'mainBkg': '#fff', 'nodeBorder': '#ccc' }}}%%\nflowchart") | safeHTML -}}
-	</figure>
-{{- else }}
-	{{- .Page.Store.Set "hasPrism" true -}}
-	<pre><code class='language-{{ .Type | default "renpy" }} darkmode-ignore' data-lang='{{ .Type | default "renpy" }}'>{{- .Inner -}}</code></pre>
-{{- end }}
+{{- .Page.Store.Set "hasPrism" true -}}
+<pre><code class='language-{{ .Type | default "renpy" }}' style="white-space:pre-wrap; word-wrap:break-word;" data-lang='{{ .Type | default "renpy" }}'>{{- .Inner -}}</code></pre>

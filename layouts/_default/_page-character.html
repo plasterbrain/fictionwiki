@@ -1,31 +1,61 @@
+{{- define "resources" }}
+	{{- $resources := .Resources.ByType "page" -}}
+	{{- $events := where (where $.Site.RegularPages "Type" "event") "Params.character" "intersect" (slice .Title) -}}
+	{{- if gt (len $events) 0 -}}
+		{{- $timelineName := (i18n "timeline" 1) -}}
+		{{/* Now this is what I call GOOD PROGRAMMING */}}
+		{{- $timelineContent := `<ol class="mx-0" type="none">` -}}
+		{{- range $events.Reverse -}}
+			{{- $location := "" -}}
+			{{- with .Params.location -}}
+				{{- $location = print " @ " . -}}
+			{{- end -}}
+			{{- $timelineContent = print $timelineContent (printf `
+				<li class="mb-5 timeline-char__event">
+					<h3 class="mt-1 is-size-6">
+						<span class="is-size-7 mr-2">%[3]s%[4]s</span><a href="%[1]s">%[2]s</a>
+					</h3>
+					<p class="is-size-7">%[5]s</p>
+				</li>` .RelPermalink .Title (time.Format ":date_short" .Date) $location .Description) -}}
+		{{- end -}}
+		{{- $timelineContent = print $timelineContent `</ol>` -}}
+		{{- $resources = $resources | append (dict "Title" $timelineName "LinkTitle" $timelineName "Content" $timelineContent) -}}
+	{{- end -}}
+	{{- .Page.Store.Set "hasResources" $resources -}}
+{{- end }}
+
 {{- define "sidebar2" }}
 	{{ partial "sidebar/nav-toc.html" . }}
 	{{- $page := . -}}
-	{{- $notThisPage := where .CurrentSection.Pages "Permalink" "ne" $page.Permalink -}}
-	
-	<!-- Characters in same stories -->
-	{{- $otherChars := $notThisPage }}
-	{{- with where $otherChars "Params.Stories" "intersect" $page.Params.Stories -}}
-		{{- range $page.Params.Stories }}
-			<!-- Change to search $otherChars to avoid repeating -->
-			{{- $sameStoryChars := where $notThisPage "Params.Stories" "intersect" (slice .) -}}
-			
-			{{ $story := $.Site.GetPage . }}
-			{{ partial "sidebar/nav-generic.html" (dict "pages" (shuffle $sameStoryChars) "label" $story.LinkTitle ) }}
-			{{- $otherChars = $otherChars | complement $sameStoryChars -}}
-		{{- end }}
-	{{ end }}
+	{{- $chars := .CurrentSection.Pages -}}
+	{{- $useGeneric := true -}}
 	
 	<!-- Characters in whatever category -->
-	{{- with where $notThisPage "Params.Categories" "intersect" .Params.Categories -}}
-		{{ range $page.Params.Categories }}
-			{{ partial "sidebar/nav-generic.html" (dict "pages" (where $otherChars "Params.Categories" "intersect" (slice .)) "label" .) }}
-		{{ end }}
-		{{- $otherChars = $otherChars | complement . -}}
+	{{ with (where $chars "Params.Categories" "intersect" .Params.Categories) }}
+		{{- range $page.GetTerms "categories" }}
+			{{ partialCached "sidebar/nav-generic.html" (dict "Pages" .Pages "Label" .LinkTitle) .Permalink }}
+		{{- end -}}
+		{{- $useGeneric = false -}}
+		<hr/>
+	{{- end -}}
+	
+	<!-- Characters in same stories -->
+	{{- with where $chars "Params.Stories" "intersect" $page.Params.Stories -}}
+		{{- range $page.Params.Stories -}}
+			<!-- Change to search $otherChars to avoid repeating -->
+			{{- $sameStoryChars := where $chars "Params.Stories" "intersect" (slice .) -}}
+			
+			{{- $storyTitle := . -}}
+			{{- with $.Site.GetPage . -}}
+				{{- $storyTitle = .LinkTitle -}}
+			{{- end -}}
+			{{- partialCached "sidebar/nav-generic.html" (dict "Pages" $sameStoryChars "Label" (i18n "moreFromX" $storyTitle)) (. | urlize) -}}
+		{{- end -}}
+		{{- $useGeneric = false -}}
 	{{- end -}}
 
 	<!-- More characters not mentioned yet! -->
-	{{- with $otherChars }}
-		{{ partial "sidebar/nav-generic.html" (dict "pages" (first 5 .) "label" ( i18n "character")) }}
-	{{- end }}
+	{{- if and $chars $useGeneric -}}
+		{{ partialCached "sidebar/nav-generic.html" (dict "Pages" (first 5 $chars) "Label" (i18n "character")) }}
+	{{- end -}}
 {{- end }}

@@ -1,15 +1,21 @@
 # Fictionwiki v0.0.0 &mdash; Worldbuilding Journal Tool
 
-This is **Fictionwiki**, a starter kit for the free static web generator Hugo, loaded with tools to keep track of your fictional universe!
+This is **Fictionwiki**, a starter kit for the free static web generator Hugo loaded with tools to boost your creative writing and game design notes.
 
-If you already use a markdown- or txt-based writing program but find yourself in need of more complex tools (or just struggling to organize 80k+ words of worldbuilding notes) Fictionwiki is for you!
+Fictionwiki was born because I needed a way to link 100k words of notes together and keep track of events on a fictional calendar system. If you have a lot of Markdown-based notes you want to integrate in one place with tables, calendars, or moodboards, it may be just what you're looking for!
 
 ## Features
-- **Everything in one place, but better** &mdash;
-No more switching between three different programs for different kinds of documents. Turn your existing notes into interactive timelines. Link a character page to other characters, locations, events, and magic abilities. Embed tables and photo-galleries.
-- **It's like so fast you guys** &mdash; Yeah I see you with your lagging 400-page Google Doc.
-- **Game design tools** &mdash; Syntax-highlighting and charts via Mermaid.js make plotting out game concepts a snap.
-- **Totally private and offline** &mdash; Though you view the wiki using your browser, everything is stored on your computer. No monthly payment, no account sign-up required to download, and nothing is shared unless you export and send your wiki to friends.
+- **Organized** - Keep all kinds of notes in one place
+- **Fast** - Yeah I see you with your lagging 400-page Google Doc
+- **Free** - No monthly payment, no sign-up
+- **Tools** - Enhance your notes with:
+    - Syntax-highlighting (including for Ren'Py! YEAH!)
+    - Flowcharts/diagrams from simple markup
+    - Embedded media
+    - Calendar/timeline views
+    - Site search
+    - Broken link/stub tracker
+    - Word count goals
 - **Track edits with git** &mdash; Your notes and wiki are already file- and folder-based, making Git integration seamless.
 - **Host your wiki online** &mdash; While it's meant to be a personal multimedia notebook, you can export your wiki with a single command to host on Neocities or share with friends.
 
@@ -18,17 +24,17 @@ No more switching between three different programs for different kinds of docume
 - **No <abbr title="What You See Is What You Get (editor)">WYSIWYG</abbr>** &mdash; You may need to learn some CSS/HTML if you're used to writing notes in a word-processor that has a toolbar for fancy colors, sizes, and fonts. 
 - **Not Mediawiki** &mdash; While this does essentially create a wiki, if you publish this notebook online or share with friends, people can't "sign up" and edit it. (However, you can always replicate edit history, talk pages, edit locking, and other collaboration tools using git.)
 
-## How it works
-Fictionwiki is a theme for Hugo. Hugo is a free website generator that runs on your computer. To make a site with Hugo, you need a collection of HTML-based templates (that's Fictionwiki) and a folder of content (that's your notes). Then you just run the Hugo server command in your site folder.
+## How does it work?
+Fictionwiki is built as a theme for [Hugo](https://gohugo.io/). Hugo is a free and very fast website generator.
 
-Content files are a combination of **Markdown** and **TOML/YAML**.
-- Markdown is a very simple text formatting language that a lot of sites and programs use. If you've ever `*styled* ~~text~~` in Discord or posted `[a link](http://zombo.com/)` on Reddit, you've used Markdown!
-- TOML/YAML are basically languages for setting options. They're used at the top of your pages for things like `title: My Cool Page`.
+You're probably thinking, "a website? Ew! I don't want to put all my notes on the Internet.com" But wait! Did you know you can build and run websites *locally*, offline, solely to be viewed on your computer? It's true!
 
-### Basic installation instructions
-1. Download this starter kit and install Hugo.
+Though you *can* export and put it online if you like, Fictionwiki basically takes a folder of specially-formatted notes and turns them into lovely, clickable, HTML files you view in your browser &mdash; offline.
+
+## Installation
+1. Download and install Hugo.
 1. Open Command Prompt/Terminal.
-    - Run `hugo new site yourcoolwiki` to create a project folder to hold fictionwiki and your content.
+    - Run `hugo new site project-name` to create a project folder to hold fictionwiki and your content.
     - Run `hugo server` to start Hugo.
 1. Visit `localhost:1313` in your browser.
 1. Start creating content files. The wiki will update live in your browser every time you save.

@@ -9,7 +9,7 @@ title: "Event 1"
 #endDate:
 #endTime:
 description: ""
-characters: ["Character 1", "Character 2"]
+character: ["Character 1", "Character 2"]
 location: "Country"
-#subplots: []
+#subplot: []
 ---

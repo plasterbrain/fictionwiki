@@ -1,0 +1,22 @@
+{{- define "sidebar1" -}}
+    {{- partial "header/title.html" . -}}
+    {{- partial "sidebar/nav-site.html" . -}}
+{{- end -}}
+
+{{- define "main" }}
+    {{- partialCached "sidebar/search.html" . "search" -}}
+    <p id="results-plural" style="display:none;">
+        {{- i18n "xResultsFound" "?" | safeHTML -}}
+    </p>
+    <p id="results-singular" style="display:none;">
+        {{- i18n "xResultsFound" 1 | safeHTML -}}
+    </p>
+    <ol id="search__results" type="none" class="ml-0">
+
+    </ol>
+{{- end }}
+
+{{- define "scripts" }}
+    <!-- @TODO add lunr -->
+    {{- partialCached "footer/js-build.html" (dict "Script" "search") "search" }}
+{{- end }}

@@ -2,8 +2,8 @@
 	{{- if ne .FirstSection .CurrentSection }}
 		{{- $pages := (where .Pages "Kind" "section") -}}
 		{{- $pages = cond (gt 0 (len $pages)) $pages .Pages }}
-		{{ partial "sidebar/nav-generic.html" (dict "pages" $pages "label" .Title ) }}
+		{{ partial "sidebar/nav-generic.html" (dict "Pages" $pages "Label" .Title ) }}
 	{{- else }}
-		{{ partial "sidebar/nav-generic.html" (dict "pages" (where .Pages "Kind" "section") "label" (i18n "section") ) }}
+		{{ partial "sidebar/nav-generic.html" (dict "Pages" (where .Pages "Kind" "section") "Label" (i18n "section") ) }}
 	{{- end }}
 {{- end }}

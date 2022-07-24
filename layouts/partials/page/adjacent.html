@@ -1,0 +1,10 @@
+{{- $values := dict "label" (slice "prev" "next") "arrow" (slice "&laquo;" "&raquo;") "arrowClass" (slice "mr-2" "ml-2") "boxClass" (slice "adjacent-prev" "adjacent-next") -}}
+{{- $dir := cond (eq .Dir "prev") 0 1 -}}
+<a href="{{- .Article.RelPermalink -}}" style="text-decoration: none;">
+    <article class='adjacent {{ index (index $values "boxClass") $dir | safeCSS }} is-flex is-align-items-center'>
+        <span style="margin-top: -1rem;" role="presentation" class='is-size-1 {{ index (index $values "arrowClass") $dir | safeCSS -}}'>
+            {{- index (index $values "arrow") $dir | safeHTML -}}
+        </span>
+        <h3 class="is-size-6 mt-0 mb-3">{{- .Article.Title -}}</h3>
+    </article>
+</a>

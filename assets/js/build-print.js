@@ -1,3 +1,14 @@
+/**
+ *  ______   ______  _____  ______  _______ 
+ * | |  | \ | |  | \  | |  | |  \ \  | |
+ * | |__|_/ | |__| |  | |  | |  | |  | |
+ * |_|      |_|  \_\ _|_|_ |_|  |_|  |_|
+ * @file    Adds functionality to print preview buttons
+ * @desc    This one does actually have to be built in Hugo. ∑(;°Д°)
+ * @author  plasterbrain
+ * @license MIT-0 <https://opensource.org/licenses/MIT-0>
+ * @version 1.0.0
+ */
 import * as params from '@params';
 document.addEventListener("DOMContentLoaded", function (event) {
     const $back = document.getElementById("button-back");
@@ -14,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
         $buttons.forEach($button => {
             $button.style = "display:none;"
         });
-        console.log("HONK");
         // This has to be added dynamically or it eats our buttons.
         var script = document.createElement("script");
         script.setAttribute("type", "text/javascript");

@@ -33,7 +33,7 @@ Subplot folders contain single pages called **Events**. Events describe characte
 #### Events In More than One Subplot
 Depending on how you organize them, some Events in your story may be relevant to multiple subplots. If this is the case, keep the Event page in the folder of its primary Subplot -- the one you most want showing up in its page URL.
 
-Then add the `subplots` field to its frontmatter with a list like this: `subplots: [subplot1, subplot2]`. This will ensure your event shows up in the timeline, event, and calendar views on all relevant subplot pages. @TODO decide on format for this ALSO GET IT WORKING IT'S BORKED
+Then add the `subplots` field to its frontmatter with a list like this: `subplot: [subplot1, subplot2]`. This will ensure your event shows up in the timeline, event, and calendar views on all relevant subplot pages. @TODO decide on format for this ALSO GET IT WORKING IT'S BORKED
 
 ### Chapters
 **Chapter** pages describe sets of narratively related events in your story. They're good places to put a storyboards, drabbles, or rough drafts. Because your Event pages live under Subplot sections, the events in a chapter won't be listed automatically. However, you can easily embed any Event pages you've made with the [event shortcode](/readme-shortcodes)! Use it to show important event details and summaries alongside your chapter synopsis.

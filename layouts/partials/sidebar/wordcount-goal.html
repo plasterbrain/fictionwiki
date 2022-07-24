@@ -1,0 +1,11 @@
+{{- if .Chapter.Params.wordGoal -}}
+    {{- $words := 0 -}}
+    {{- $folder := .Site.Params.storyContentFolder | default "text" -}}
+    {{- $folder = print $folder "/*.md" -}}
+    {{- range .Chapter.Resources.Match $folder -}}
+		{{- $words = add $words (.Content | countwords) -}}
+    {{- end -}}
+    {{- $percent := cond (ge $words .) 100 (math.Round (mul (div (float $words) .Chapter.Params.wordGoal) 100)) -}}
+    <div class="progress-pie-color progress-wordcount" data-value="{{- math.Round (mul (div (float $words) .Chapter.Params.wordGoal) 100) -}}">
+    </div>
+{{- end -}}

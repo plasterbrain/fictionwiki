@@ -1,0 +1,19 @@
+{{- with .Inner }}
+    {{- $colors := findRE "\\s*[-|1]\\s*(.*)" . -}}
+    <div role="presentation" class="columns is-multiline">
+    {{- range $colors -}}
+        {{- $colorParts := findRE "([^,]*)" (replaceRE "^\\s*[-|1]" "" .) -}}
+        {{- $colorName := index $colorParts 0 -}}
+        {{- $colorHex := index $colorParts 1 -}}
+        {{- $bg := printf "style='height:100px;background:%s;'" $colorHex -}}
+        <div role="presentation" class="column is-half-tablet is-one-fifth-desktop">
+            <div role="img" alt="" aria-labelledby='{{- print "color-" $colorName "__title" -}}' {{ $bg | safeHTMLAttr -}}>
+            </div>
+            <p class="mt-2" id='{{- print "color-" $colorName "__title" -}}'>
+                <span class="has-text-weight-bold">{{- index $colorParts 0 -}}</span>
+                <span class="is-block is-size-7 is-family-monospace">{{- $colorHex -}}</span>
+            </p>
+        </div>
+    {{- end -}}
+    </div>
+{{- end -}}

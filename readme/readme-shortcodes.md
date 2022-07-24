@@ -10,8 +10,6 @@ Page-embedding shortcodes have a Name parameter. To help Hugo find the right pag
 ## Link
 An easy way to link to other pages on your wiki. If you try to link to a page that doesn't exist, it will be added to the list of missing pages on the Maintenance Hub page.
 
-- `Name`: File path of the page to 
-
 ## Infobox
 See: readme-infoboxes.md
 
@@ -25,6 +23,23 @@ Show some data about a character's ability.
 - `Level`*: Skill level as a whole number. Shows a number of stars based on the value (e.g. `Level=1` shows one star). If omitted, the box will show "N/A" instead.
 - `Weakness`*: Info about the weaknesses of this skill. Omit to hide this field.
 - `Specialty`*: Info about any particular specialties or sub-skills. Omit to hide this field.
+
+## Ideas Board
+The ideas board adds visual sugar to random lists of ideas. You could also use it as a mood board for a character or place.
+
+```
+{{< board >}}
+    - Each item in this list...
+    - ...appears as a "sticky note!"
+{{< /board >}}
+```
+
+## Embed: Map
+This shortcode uses Leaflet to show a map. If you've created a map using [Azgaar's Map Generator](https://azgaar.github.io/Fantasy-Map-Generator/), you'll have an option to export to tiles.
+
+- [MapTiler Desktop](https://www.maptiler.com/download/) is the easiest method, though the free version has some limitations, including a watermark.
+- [Jahed Ahmed's maptiles script](https://github.com/jahed/maptiles)
+- [gdal2tiles for Leaflet](https://github.com/commenthol/gdal2tiles-leaflet)
 
 ## Embed: Airtable
 - `ID`: Base/View ID (e.g. "shr1234asdf") from the public share or embed link of your table.

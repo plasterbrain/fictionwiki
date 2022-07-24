@@ -5,7 +5,9 @@
         {{- range . }}
         <li class="column is-one-third is-half-tablet">
             <article>
-                <h1 class="is-size-5 has-text-weight-normal">{{ $i }}. {{ .Title }}</h1>
+                <h1 class="is-size-5 has-text-weight-normal">
+                    <a href="{{- .Permalink -}}">{{ $i }}. {{ .Title }}</a>
+                </h1>
                 <p class="is-size-7">{{ .Description }}</p>
             </article>
         </li>
@@ -13,5 +15,6 @@
         {{- end }}
     </ol>
     {{- end }}
-    {{- partial "page/timeline.html" (dict "Events" (where .RegularPagesRecursive "Type" "event") "CurrentPage" .) -}}
+    {{ .Content }}
+    {{- partial "page/timeline.html" (dict "Site" $.Site "Events" (where .RegularPagesRecursive "Type" "event") "CurrentPage" .) -}}
 {{- end }}

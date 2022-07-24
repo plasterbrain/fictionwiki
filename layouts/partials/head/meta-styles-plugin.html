@@ -1,0 +1,8 @@
+{{- $styles := slice "prism" "reveal" -}}
+{{/* We can't evaluate .Page.Store at this point. */}}
+{{ range $styles }}
+    {{ with resources.Get (printf "css/%s.css" .) }}
+        {{- $style := . | resources.Minify -}}
+        <link rel="stylesheet" href="{{- $style.Permalink -}}">
+    {{ end }}
+{{- end }}

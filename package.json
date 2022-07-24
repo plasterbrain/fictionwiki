@@ -1,12 +1,29 @@
 {
 	"devDependencies": {
+		"@babel/cli": "^7.18.6",
+		"@babel/core": "^7.18.6",
 		"@creativebulma/bulma-divider": "^1.1.0",
 		"@creativebulma/bulma-tooltip": "^1.2.0",
 		"@fristys/masonry": "^1.1.7",
+		"@types/prismjs": "^1.26.0",
+		"babel-plugin-prismjs": "^2.1.0",
 		"bulma": "^0.9.4",
-		"html2pdf.js": "^0.10.1",
-		"jspdf": "^2.5.1",
+		"clipboard": "^2.0.11",
+		"d3": "^7.6.1",
+		"esbuild": "^0.14.49",
 		"leaflet": "^1.8.0",
-		"prismjs": "^1.28.0"
+		"lunr": "^2.3.9",
+		"mermaid": "9.1.3",
+		"mv": "^2.1.1",
+		"pagedjs": "^0.3.5",
+		"prismjs": "^1.28.0",
+		"reveal.js": "^4.3.1",
+		"sass": "^1.53.0"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"prism": "npx babel assets/js/src/prism.js --out-file assets/js/prism.js --config-file ./babel.config.json && esbuild assets/js/prism.js --bundle --outfile=assets/js/prism.js --allow-overwrite && node -e \"var mv = require('mv'); mv('assets/js/prism.css', 'assets/css/prism.css', function(err) {});\"",
+		"buildJS": "esbuild assets/js/src/masonry.js assets/js/src/reveal.js assets/js/src/mermaid.js --bundle --outdir=assets/js --allow-overwrite --minify",
+		"bulma": "sass --update --no-source-map --style=compressed --load-path=node_modules assets/scss/bulma.scss:static/static/css/bulma.css"
 	}
 }

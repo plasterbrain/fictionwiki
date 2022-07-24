@@ -17,7 +17,6 @@ Different page types in Fictionwiki have specific fields, but all pages use the 
 
 To avoid having to copy/paste frontmatter fields or type them all from scratch, you can use the `hugo new` command to create your new pages from a template. See [Page Types]() for different kinds of pages you can make.
 
-## Page Content
 The actual content of your page goes underneath the frontmatter and is written in Markdown format.
 
 ## Page Layout

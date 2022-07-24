@@ -1,0 +1,5 @@
+<figure class="mermaid m-0 mb-1">
+    {{- .Inner | safeHTML -}}
+</figure>
+<!-- (replace .Inner "flowchart" "%%{init: {'themeVariables': { 'mainBkg': '#fff', 'nodeBorder': '#ccc' }}}%%\nflowchart") -->
+{{- .Page.Store.Set "hasMermaid" true -}}

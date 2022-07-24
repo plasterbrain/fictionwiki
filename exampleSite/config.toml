@@ -5,11 +5,12 @@
 # Copy this file into your main wiki
 # directory and edit the values.
 
-title = "YOUR WIKI NAME"
-copyright = "You!"
+title = "Project Name"
+author = "You"
+copyright = "&copy; %[1]s %[2]s, all rights reserved."
 DefaultContentLanguage = "en" # Lowercase language code.
 newContentEditor = "codium"   # Path name for your IDE.
-#titleCaseStyle = "AP"             # Also accepts "Chicago" or "Go"
+#titleCaseStyle = "AP"        # Also accepts "Chicago" or "Go"
 
 #----------------------------------------------------------------------------
 baseURL = "/"
@@ -18,6 +19,7 @@ enableEmoji = true
 sectionPagesMenu = "main"
 refLinksErrorLevel = "WARNING"
 enableInlineShortcodes = true
+ignoreFiles = ['\-deleted.md$']
 #----------------------------------------------------------------------------
 
 [taxonomies]

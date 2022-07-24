@@ -1,0 +1,15 @@
+{{- define "sidebar2" }}
+	{{- $chars := .CurrentSection.Pages -}}
+	
+    {{- $cleanup := .Site.Params.cleanupTag -}}
+        {{ $cleanup }}
+    {{- range $key, $pages := .Site.Taxonomies.categories -}}
+        {{- if eq $key $cleanup -}}
+            {{- continue -}}
+        {{- end -}}
+        {{- $catChars := intersect .Pages $chars -}}
+        {{- if $catChars -}}
+            {{- partialCached "sidebar/nav-generic.html" (dict "Pages" $catChars "Label" .Page.Title) .Page.Permalink -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}

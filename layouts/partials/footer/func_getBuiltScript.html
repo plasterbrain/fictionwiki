@@ -1,6 +1,0 @@
-{{- $js := print .Script ".js" -}}
-{{- $js = resources.Get (path.Join "js/" $js) -}}
-{{- with $js -}}
-    {{- $js = $js | js.Build (dict "minify" true) -}}
-    {{- .Page.Store.Set ("js_" .Script) $js -}}
-{{- end -}}

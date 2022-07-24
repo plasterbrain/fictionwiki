@@ -1,4 +1,4 @@
-{{ $ariaLabel := "" }}
+{{- $ariaLabel := "" -}}
 {{- with .Title }}
 	<h3 id="info-{{ . | urlize }}" class="menu-label is-size-6">
 		{{ . }}
@@ -39,7 +39,7 @@
 			{{- $value := index . "Value" -}}
 			{{- $link := index . "Link" -}}
 			<div role="presentation" class="columns mb-0 is-size-7">
-				<dt class="column is-one-third p-0 mr-2 is-align-self-center">
+				<dt class="column is-one-third p-0 mr-2">
 					{{- index . "Label" -}}
 				</dt>
 				<dd class="column m-0 p-0">
@@ -49,7 +49,7 @@
 							{{- $i := 0 -}}
 							{{- $count := len $value -}}
 							{{- range $value -}}
-								{{- partialCached "func_linkPage.html" (dict "Title" . "Path" $link) (print $link .) -}}
+								{{- partialCached "func_linkPage.html" (dict "Title" . "Path" $link) (. | urlize) -}}
 								{{- $i = add $i 1 -}}
 								{{- if lt $i $count -}}
 									{{- $delimiter -}}

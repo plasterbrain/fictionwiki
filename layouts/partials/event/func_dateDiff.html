@@ -35,7 +35,9 @@
 {{ $return = printf "Date 2: %d/%d/%d<br>Date 1: %d/%d/%d<br>Difference:<br>" $date2.month $date2.day $date2.year $date1.month $date1.day $date1.year }}
 {{- end -}}
 
-<!-- Months in Refall are 30 days long. @TODO custom value SOMEDAY... -->
+{{- $numWeekdays := .Site.Params.Calendar.daysPerWeek | default 7 -}}
+{{- $numMonthdays := .Site.Params.Calendar.daysPerMonth | default 30 -}}
+{{- $numMonths := .Site.Params.Calendar.monthsPerYear | default 12 -}}
 {{- $daysPerMonth := 30 }}
 {{- if gt $date1.day $daysPerMonth -}}
 	{{- $date1 := merge $date1 (dict "day" $daysPerMonth) -}}

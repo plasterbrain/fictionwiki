@@ -1,13 +1,10 @@
 {{- $total := len $.Site.RegularPages -}}
 {{- $words := 0 -}}
 {{- range $.Site.RegularPages -}}
-	{{- $words = add $words .WordCount -}}
 	{{- $total = add $total (len .Resources) -}}
-	{{- range .Resources -}}
-		{{ if eq .ResourceType "page" }}
-			{{- $words = add $words (.Content | countwords) -}}
-		{{ end }}
+	{{- range .Resources.ByType "page" -}}
+		{{- $words = add $words (.Content | countwords) -}}
 	{{- end -}}
 {{- end -}}
-<span class="mr-2">{{ i18n "pageCount" $total }}</span>
-<span>{{ i18n "wordCount" $words }}</span>
+<!-- <span class="mr-2"></span>-->
+<span>{{- i18n "wordCount" $words -}}</span>

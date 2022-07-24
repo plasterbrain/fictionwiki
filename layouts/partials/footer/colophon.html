@@ -1,6 +1,11 @@
 <footer class="footer">
 	<div role="presentation" class="content has-text-centered">
-		<p>&copy; {{ now.Format "2006"}} Amanda, who stole my project (actually it's Agnes again)</p>
-		<p><a href="https://loading.io/icon/">Rubber Duck favicon by Loading.io</a></p>
+		{{- if $.Site.Copyright -}}
+			<p class="mb-1">{{- printf $.Site.Copyright (now.Format "2006") ($.Site.Author | default $.Site.Title) | safeHTML -}}</p>
+		{{- end -}}
+		<span class="is-size-7">
+			{{- i18n "xByYUnderZ" (dict "asset" "<a href='https://loading.io/icon/' rel='nofllow'>Rubber Duck</a>" "author" "Loading.io" "license" "LD-BY") | safeHTML }} /
+			{{ i18n "xByYUnderZ" (dict "asset" "<a href='https://www.toptal.com/designers/subtlepatterns/cork-board-pattern/' rel='nofollow'>Cork Board Pattern</a>" "author" "Lopez Théo" "license" "CC BY 3.0") | safeHTML -}}
+		</span>
 	</div>
 </footer>

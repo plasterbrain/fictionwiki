@@ -1,0 +1,10 @@
+<form action="{{ with .GetPage "/search" }}{{.Permalink}}{{end}}" id="form-search" method="GET" class="is-flex my-3">
+    <input class="input is-small" type="search" id="search" name="s" />
+    <button id="button-submit" type="submit" class="button is-one-fifth is-small">
+        {{- with resources.Get "icons/search.svg" -}}
+            <span class="icon is-small">{{- .Content | safeHTML -}}</span>
+        {{- else -}}
+            {{- i18n "searchVerb" -}}
+        {{- end -}}
+    </button>
+</form>

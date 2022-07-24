@@ -1,10 +1,11 @@
 @charset "utf-8";
-$family-primary: Lato;
+$family-primary: inherit;
 $scheme-main: #1d1d1d;
 $scheme-main-bis: #0c0c0c;
 $background: #363636;
 $box-background-color: #222; //#39332e
 $pre-background: $box-background-color;
+$content-blockquote-background-color: $box-background-color;
 $menu-item-active-background-color: darken($scheme-main, 1%);
 $text: #a7a7a7;
 $border: #404040;

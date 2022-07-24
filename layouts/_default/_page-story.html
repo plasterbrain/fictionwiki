@@ -1,4 +1,22 @@
+{{- define "header" }}
+	{{- $this := . -}}
+	{{- with (where .Parent.RegularPages "BundleType" "leaf") -}}
+		<div role="presentation" class="adjacents is-flex is-justify-content-space-between">
+		{{- range where . "Weight" (sub $this.Weight 1) -}}
+			{{ partial "page/adjacent.html" (dict "Article" . "Dir" "prev") }}
+		{{- end -}}
+		{{- range where . "Weight" (add $this.Weight 1) -}}
+			{{ partial "page/adjacent.html" (dict "Article" . "Dir" "next") }}
+		{{- end -}}
+		</div>
+	{{ end }}
+	<h1 id="page__title" class="title mt-0">{{- .Title -}}</h1>
+	{{- with .Description }}
+		<p class="subtitle is-size-5">{{- . | markdownify -}}</p>
+	{{- end }}
+{{- end }}
+
 {{- define "sidebar2" }}
+	{{ partialCached "sidebar/wordcount-goal.html" (dict "Chapter" . "Site" $.Site) (.Title | urlize) }}
 	{{ partial "sidebar/nav-toc.html" . }}
-	{{ partial "sidebar/nav-story.html" .Parent }}
 {{- end }}

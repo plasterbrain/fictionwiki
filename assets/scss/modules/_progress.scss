@@ -1,4 +1,11 @@
-/* CSS Progress Pie by Olivia Ng | MIT License | github.com/oliviale/css-progress-pie*/
+/**
+@file    CSS Progress Pie
+@desc    Updated to remove slash division for Dart Sass compatability
+@author  Olivia Ng
+@license MIT <https: //opensource.org/licenses/MIT>
+@link    github.com/oliviale/css-progress-pie*
+*/
+@use "sass:math";
 $pie-bg: $scheme-main;
 
 .progress-pie-color {
@@ -41,7 +48,7 @@ $pie-bg: $scheme-main;
         background-image: linear-gradient(to right, transparent 50%, #cc0000 0);
 
         &:before {
-            transform: rotate(#{$i/100}turn);
+            transform: rotate(calc(#{$i} / 100)turn);
         }
     }
 }
@@ -51,7 +58,7 @@ $pie-bg: $scheme-main;
         background-image: linear-gradient(to right, transparent 50%, #ffcf3a 0);
 
         &:before {
-            transform: rotate(#{$i/100}turn);
+            transform: rotate(calc(#{$i} / 100)turn);
         }
     }
 }
@@ -62,7 +69,7 @@ $pie-bg: $scheme-main;
 
         &:before {
             background-color: #ffcf3a;
-            transform: rotate(#{$i/100 - .5}turn);
+            transform: rotate(calc(calc(#{$i} / 100) - .5)turn);
         }
     }
 }
@@ -73,7 +80,7 @@ $pie-bg: $scheme-main;
 
         &:before {
             background-color: #09944a;
-            transform: rotate(#{$i/100 - .5}turn);
+            transform: rotate(calc(calc(#{$i} / 100) - .5)turn);
         }
     }
 }

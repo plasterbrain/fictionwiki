@@ -4,7 +4,7 @@ fields = [
     {id="age", n=1},
     {id="birthday", n=1},
     {id="gender", n=1, transValue=true},
-    {id="appearsIn", n=1, link="timeline"},
+    {id="appearsIn", n=1, link="stories"},
     {id="status", n=1, transValue=true},
 ]
 [[section]]

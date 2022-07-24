@@ -10,7 +10,7 @@ title: "Event 1"
 #endDate:             # Use if event ends on a different day, same format.
 #endTime:             # Use if event ends the same day: e.g. 16:00:00
 description: ""
-#characters: ["", ""] #@TODO slugs?
+#character: ["", ""] #@TODO slugs?
 #location: ""         #@TODO ibid
-#subplots: [{{ .Parent }}] # Use if it pertains to more than one.
+#subplot: [{{ .Parent }}] # Use if it pertains to more than one.
 ---

@@ -1,22 +1,48 @@
 {{- define "subpages" }}
-	{{- $title := .Params.subpagesTitle | default .Title -}}
-	<h2>{{ i18n "typesOfX" $title }}</h2>
-	{{- with (where .RegularPagesRecursive "Parent.Title" "!=" .Title) }}
+	{{- $site := $.Site -}}
+	{{- $pages := "" -}}
+	{{- if eq .CurrentSection .FirstSection }}
+		{{- $pages = where .RegularPagesRecursive "Parent.Title" "!=" .Title }}
+	{{- else -}}
+		{{- $pages = .RegularPages -}}
+	{{- end -}}
+	<h2>{{ i18n "typesOfX" .LinkTitle }}</h2>
+	{{- with $pages }}
 		<table>
 			<thead>
 				<tr>
-					<th>Name</th>
-					<th>Type</th>
-					<th>Rarity</th>
+					<th scope="col">{{- i18n "name" 1 -}}</th>
+					<th scope="col">{{- i18n "type" 1 -}}</th>
+					<th scope="col">{{- i18n "rarity" 1 -}}</th>
 				</tr>
 			</thead>
 			<tbody>
 				{{- range . }}
-				<tr>
-					<td><a href="{{ .RelPermalink }}">{{ .Title }}</a></td>
-					<td>{{ .Parent.Title }}</td>
-					<td><span class="tag">{{ .Params.rarity }}</span></td>
-				</tr>
+					{{- $rarity := .Params.rarity -}}
+					{{- $rarityAbbr := false -}}
+					{{- with index $site.Data.rarity (.Params.rarity | urlize) -}}
+						{{- $rarityAbbr = (i18n .) | default . -}}
+					{{- else -}}
+						{{- $rarity = $rarity | default (i18n "na") -}}
+					{{- end -}}
+					{{- $rarity := $rarity | upper -}}
+					<tr>
+						<th scope="row">
+							<a href="{{- .RelPermalink -}}">{{- .Title -}}</a>
+						</th>
+						<td>{{- .Parent.LinkTitle -}}</td>
+						<td>
+							{{- if $rarityAbbr -}}
+								<abbr class="tag" title="{{- $rarityAbbr -}}">
+									{{- $rarity -}}
+								</abbr>
+							{{- else -}}
+								<span class="tag">
+									{{- $rarity -}}
+								</span>
+							{{- end -}}
+						</td>
+					</tr>
 				{{- end }}
 			</tbody>
 		</table>
@@ -24,6 +50,14 @@
 {{- end }}
 
 {{- define "sidebar2" }}
-	{{ partial "sidebar/nav-generic.html" (dict "pages" (where .Pages "Kind" "section") "label" (i18n "typesOfX" (i18n "magic"))) }}
-	{{ partial "sidebar/nav-generic.html" (dict "pages" (where .Pages "Kind" "!=" "section") "label" (i18n "subpage")) }}
+	{{- $types := (where .Pages "Kind" "section") -}}
+	{{- if eq .CurrentSection .FirstSection }}
+		{{- with (where .Pages "Kind" "!=" "section") -}}
+			{{ partial "sidebar/nav-generic.html" (dict "Pages" . "Label" (i18n "subpage")) }}
+		{{- end -}}
+	{{- else -}}
+		{{/* If this is a magic subtype you can show non-section children */}}
+		{{- $types = $types | default (where .Pages "Kind" "!=" "section") }}
+	{{- end -}}
+	{{ partial "sidebar/nav-generic.html" (dict "Pages" $types "Label" (i18n "typesOfX" .LinkTitle)) }}
 {{- end }}

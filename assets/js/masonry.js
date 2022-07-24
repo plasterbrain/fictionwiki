@@ -1,32 +1,13 @@
+(()=>{var L=Object.create;var C=Object.defineProperty;var S=Object.getOwnPropertyDescriptor;var x=Object.getOwnPropertyNames;var k=Object.getPrototypeOf,B=Object.prototype.hasOwnProperty;var R=(i,t)=>()=>(t||i((t={exports:{}}).exports,t),t.exports);var T=(i,t,e,s)=>{if(t&&typeof t=="object"||typeof t=="function")for(let n of x(t))!B.call(i,n)&&n!==e&&C(i,n,{get:()=>t[n],enumerable:!(s=S(t,n))||s.enumerable});return i};var W=(i,t,e)=>(e=i!=null?L(k(i)):{},T(t||!i||!i.__esModule?C(e,"default",{value:i,enumerable:!0}):e,i));var I=R(y=>{"use strict";function U(i,t){t===void 0&&(t=25);var e=0;return function(){for(var s=[],n=0;n<arguments.length;n++)s[n]=arguments[n];clearTimeout(e),e=setTimeout(function(){return i.apply(void 0,s)},t)}}function b(i,t){for(var e=i.length;e--;)i[e].removeEventListener("load",t),i[e].removeEventListener("error",t)}function D(i,t){var e=i.getElementsByTagName("img"),s=e.length;if(s){for(var n=0,l=function(){++n===s&&(b(e,l),t())},r=s;r--;){var a=e[r];!a.getAttribute("src")||a.complete?n++:(a.addEventListener("load",l),a.addEventListener("error",l))}n===s&&(b(e,l),t())}else t()}Object.defineProperty(y,"__esModule",{value:!0});var O="[@fristys/masonry]",f={containerDoesNotExist:O+" Masonry container element not found or provided.",resizeObserverNotSupported:O+" Looks like ResizeObserver was not detected in this browser. If you want to support it, add a polyfill: https://github.com/juggle/resize-observer"},M=function(){function i(t,e){if(this.masonryContainer=t,this.columns=4,this.gutter=10,this.gutterUnit="px",this.loadingClass="masonry-loading",this.initOnImageLoad=!1,this.loadedClass="masonry-loaded",this.bindOnScroll=!0,this.useContainerWidth=!1,this.trackItemSizeChanges=!1,this.initDebounced=U(this.init.bind(this)),!this.masonryContainer)throw new Error(f.containerDoesNotExist);this.setOptions(e),this.initOnImageLoad?this.initOnAllImagesLoaded():this.init(),this.bindEvents()}return i.prototype.init=function(){this.resetAllPositions(),this.setItemPositions(),this.masonryContainer.classList.remove(this.loadingClass),this.masonryContainer.classList.add(this.loadedClass)},i.prototype.dispose=function(){this.bindOnScroll&&window.removeEventListener("resize",this.initDebounced.bind(this)),this.trackItemSizeChanges&&this.unbindItemSizeTracking()},i.prototype.setOptions=function(t){this.setOptionIfExists(t,"columns"),this.setOptionIfExists(t,"columnBreakpoints"),this.setOptionIfExists(t,"gutter"),this.setOptionIfExists(t,"gutterUnit"),this.setOptionIfExists(t,"loadingClass"),this.setOptionIfExists(t,"initOnImageLoad"),this.setOptionIfExists(t,"loadedClass"),this.setOptionIfExists(t,"onInit"),this.setOptionIfExists(t,"bindOnScroll"),this.setOptionIfExists(t,"useContainerWidth"),this.setOptionIfExists(t,"trackItemSizeChanges")},i.prototype.setOptionIfExists=function(t,e){t&&t.hasOwnProperty(e)&&(this[e]=t[e])},i.prototype.bindEvents=function(){this.bindOnScroll&&window.addEventListener("resize",this.initDebounced.bind(this)),this.trackItemSizeChanges&&this.bindItemSizeTracking()},i.prototype.initOnAllImagesLoaded=function(){var t=this;this.masonryContainer.classList.remove(this.loadedClass),this.masonryContainer.classList.add(this.loadingClass),D(this.masonryContainer,function(){t.init(),t.masonryContainer.classList.remove(t.loadingClass),t.masonryContainer.classList.add(t.loadedClass)})},i.prototype.setItemPositions=function(){var t=this.getColumnsForViewportSize(),e="calc("+100/t+"% - "+this.gutter+this.gutterUnit+")";this.masonryContainer.style.position="relative";for(var s=this.masonryContainer.children,n=[],l=s.length,r=0;r<l;){var a=r+t;n.push([].slice.call(s,r,a)),r=a}for(var p=n.length,d=0,m=0;d<p;){for(var g=n[d],w=g.length,h=0;h<w;){var v,u,o=g[h];o.style.position="absolute",o.style.width=e,d===0?o.style.top=0:(u=n[d-1][h])&&(v=parseInt(getComputedStyle(u).top,10),o.style.top="calc("+(v+u.offsetHeight)+"px + "+this.gutter+this.gutterUnit+")"),h===0?o.style.left=0:(u=g[h-1],o.style.left="calc("+parseInt(getComputedStyle(u).width,10)*h+"px + "+this.gutter*h+this.gutterUnit),o=o.getBoundingClientRect().top+o.offsetHeight,m<o&&(m=o),h++}d++}0<=this.masonryContainer.getBoundingClientRect().top&&(this.masonryContainer.style.height="calc("+(m-this.masonryContainer.getBoundingClientRect().top)+"px + "+this.gutter+this.gutterUnit+")"),this.onInit&&this.onInit()},i.prototype.resetAllPositions=function(){this.masonryContainer.style.position="",this.masonryContainer.style.height="";for(var t=this.masonryContainer.children,e=t.length;e--;){var s=t[e];s.style.top="",s.style.left="",s.style.width="",s.style.position=""}},i.prototype.getColumnsForViewportSize=function(){if(!this.columnBreakpoints)return this.columns;for(var t=this.useContainerWidth?this.masonryContainer.offsetWidth:window.innerWidth||document.documentElement.clientWidth||document.body.clientWidth,e=Object.keys(this.columnBreakpoints).sort(function(a,p){return a-p}),s=e.length,n=0;n<s;){var l=parseInt(e[n],10),r=this.columnBreakpoints[e[n]];if(t<l)return r;n++}return this.columns},i.prototype.bindItemSizeTracking=function(){if("ResizeObserver"in window){this.sizeObservers||(this.sizeObservers=[]);for(var t=this.masonryContainer.children,e=t.length;e--;){var s=t[e],n=new ResizeObserver(this.initDebounced.bind(this));n.observe(t[e]),this.sizeObservers.push({observer:n,target:s})}}else console.warn(f.resizeObserverNotSupported)},i.prototype.unbindItemSizeTracking=function(){if("ResizeObserver"in window)for(var t=this.sizeObservers.length;t--;){var s=this.sizeObservers[t],e=s.observer,s=s.target;e.unobserve(s)}else console.warn(f.resizeObserverNotSupported)},i}();y.Masonry=M});var E=W(I());var N={gutter:1.5,gutterUnit:"rem",useContainerWidth:!0,trackItemSizeChanges:!0,columnBreakpoints:{1215:3,1023:2,768:1}},c=document.getElementById("grid");function z(){c.classList.add("loading"),c.getBoundingClientRect().top<=0?setTimeout(z,60):(c.classList.remove("loading"),new E.Masonry(c,N))}z();})();
 /**
- * masonry
- * @file    Lightweight masonry library.
- * @author  Momchil Georgiev <fristys@gmail.com> (https://fristys.me)
- * @license MIT <https://opensource.org/licenses/MIT>
- * @version 1.1.7
+ * __  __   __   ___   __  _  _  ___   _  _ 
+ *(  \/  ) (  ) / __) /  \( \( )(  ,) ( \/ )
+ * )    (  /__\ \__ \( () ))  (  )  \  \  / 
+ *(_/\/\_)(_)(_)(___/ \__/(_)\_)(_)\_)(__/
+ *
+ * @file        Lightweight masonry library
+ * @description Non-library code licensed MIT-0 by me.
+ * @author      Momchil Georgiev <fristys@gmail.com> (https://fristys.me)
+ * @license     MIT <https://opensource.org/licenses/MIT>
+ * @version     1.1.7
  */
-import { Masonry } from 'masonry/masonry.js';
-
-// This wrapper keeps it from breaking when you use the back arrow to go to a page with a masonry grid
-const options = { gutter: 1.5, gutterUnit: 'rem', useContainerWidth: true, trackItemSizeChanges: true, columnBreakpoints: {
-    1215: 3,
-    1023: 2,
-    768: 1 } };
-// @TODO all grids
-
-const grid = document.getElementById("grid");
-/**
- * Clicking a link after the grid and then using the back arrow in the browser
- * makes getBoundingClientRect negative and screws up positioning, so this will
- * trigger periodic checks until it makes sense to init.
- */
-function initMasonry() {
-    grid.classList.add("loading");
-    if (grid.getBoundingClientRect().top <= 0) {
-        setTimeout(initMasonry, 60);
-    } else {
-        grid.classList.remove("loading");
-        new Masonry(grid, options);
-    }
-}
-initMasonry();

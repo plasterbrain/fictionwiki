@@ -7,6 +7,7 @@
 body {
 	min-height: 100vh;
 	font-weight: 300;
+	font-family: Lato;
 }
 
 main {
@@ -31,21 +32,30 @@ dd {
 }
 
 .subtitle {
-	font-family: '{{ .Params.fontSubheading | default "inherit" }}';
+	font-family: '{{ .Params.fontSubheading | default "Wolven Script" }}';
 }
 
 .font-note {
-	font-family: '{{ .Params.fontNote | default "inherit" }}';
+	font-family: '{{ .Params.fontNote | default "Daniel" }}';
 	color: #8fa6bb;
+}
+
+.corkboard__note {
+	font-family: '{{ .Params.fontBoard | default "Daniel" }}';
 }
 
 .content {
 	a {
 		font-weight: bold;
+		text-decoration: underline;
 	}
 
 	h1 {
 		font-size: 3rem;
+	}
+
+	blockquote {
+		font-family: '{{ .Params.fontBoard | default "Wolven Script" }}';
 	}
 }
 
@@ -77,6 +87,14 @@ dd {
 	li {
 		padding: .5rem .75rem 0;
 	}
+}
+
+.adjacent-next {
+	flex-direction: row-reverse;
+}
+
+.adjacents a:only-child {
+	width: 100%; // Put "next" on the right if it's alone
 }
 
 @media print {

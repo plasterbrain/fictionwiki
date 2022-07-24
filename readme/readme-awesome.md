@@ -7,6 +7,7 @@ https://github.com/nyurik/leaflet-vega
 ## Wikis
 - 💵 [LegendKeeper](https://legendkeeper.com/) - 14-day free trial, regularly $9/month (project owner only, collaborators can access for free). Originally Patreon-funded, launched c. 2020 and is still in open beta. As of 2022 its feature set prioritizes collaboration and interactive maps, with functionality for media embeds and timelines planned.
 - https://www.worldanvil.com/
+- https://obsidian.md/ is an extensible, Markdown-based multimedia notebook app. It's more fully-featured than Fictionwiki out of the box but less presentational. The base software is FREE, though publishing your notebook as a website costs $192/year.
 
 ## Timelines
 - AeonTimeline
@@ -24,6 +25,8 @@ https://github.com/nyurik/leaflet-vega
 ## Utilities
 ### Languages
 - https://github.com/mewo2/ketchum
+- http://www.zompist.com/kit.html
+- https://mewo2.com/notes/naming-language/
 
 ### Generators/Ideas
 - Kind of a mad libs thing http://www.crystalcodepalace.com/traceryTut.html

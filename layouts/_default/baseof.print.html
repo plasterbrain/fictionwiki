@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html id="document">
+<html id="document" lang="{{- $.Site.Language.Lang -}}" data-rtl='{{ eq .Site.Language.LanguageDirection "rtl" }}'>
 <head>
 	<title>{{ .Title }}</title>
 	{{- partialCached "head/meta-site.html" . -}}
@@ -18,7 +18,7 @@
         {{- .Page.Store.Set "hasResources" (where .Resources "ResourceType" "page") -}}
     {{- end -}}
     {{- $resources := .Page.Store.Get "hasResources" -}}
-    {{- $hasInfobox := .HasShortcode "infobox/character" -}}
+    {{- $hasInfobox := .HasShortcode "infobox "character"" -}}
     {{/* /RESOURCES */}}
     <main class="content p-6">
         <article>
@@ -31,7 +31,7 @@
                 </button>
                 {{- if or $hasInfobox $resources -}}
                     {{- $hideStuff := slice (dict "Title" (i18n "mainPageContent") "LinkTitle" "main") -}}
-                    {{- if .HasShortcode "infobox/character" -}}
+                    {{- if .HasShortcode "infobox "character"" -}}
                         {{- $hideStuff = $hideStuff | append (slice (dict ".LinkTitle" "infobox" "Title" (i18n "infobox" 1))) -}}
                     {{- end -}}
                     {{- $hideStuff := $hideStuff | append $resources -}}
@@ -78,7 +78,6 @@
     </main>
     {{- .Page.Store.Set "hasPrint" true -}}
 	{{- partial "footer/scripts.html" . -}}
-	{{- partialCached "footer/js-print.html" . -}}
+	{{- partialCached "footer/scripts-print.html" . -}}
 </body>
-
 </html>

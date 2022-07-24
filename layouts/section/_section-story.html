@@ -1,22 +1,6 @@
-{{- define "resources"}}
-	{{ $slug := .Title | urlize }}
-	{{- with .File -}}
-		{{- $slug = .ContentBaseName -}}
-	{{- end -}}
-	
-	<!-- TODO make "tabs" a site option -->
-	{{- $notes := .Site.GetPage (
-		printf "%s/%s/tabs" (.Section | urlize) $slug ) -}}
-		
-	{{- if $notes -}}
-		{{- $notes = $notes.Resources.Match "*.md" -}}
-		{{ .Page.Store.Set "hasResources" $notes }}
-	{{- end -}}
-{{- end }}
-
 {{- define "main" }}
 	{{ .Content }}
-	{{- partial "page/timeline.html" (dict "Events" (where .RegularPagesRecursive "Type" "event") "CurrentPage" .) -}}
+	{{- partial "page/timeline.html" (dict "Site" $.Site "Events" (where .RegularPagesRecursive "Type" "event") "CurrentPage" .) -}}
 {{- end }}
 
 {{- define "subpages" -}}<!-- -->{{- end -}}

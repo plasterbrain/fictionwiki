@@ -1,3 +1,13 @@
+/**
+ *  __   ___   __   __  _  _ __    __  ___   _  
+ * |__) |__  /__` /   \|   ||__) /  ` |__  /__` 
+ * |  \ |___ .__/ \__/ \__/ |  \ \__, |___ .__/
+ * 
+ * @file    Generates page content tabs.
+ * @author  plasterbrain
+ * @license MIT-0 <https://opensource.org/licenses/MIT-0>
+ * @version 1.0.0
+ */
 document.addEventListener("DOMContentLoaded", function (event) {
     /**
      * Content part of each tab.
@@ -10,8 +20,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
      */
     const $tabs = Array.prototype.slice.call(
         document.querySelectorAll("#tabs-page .tab"), 0);
+    /**
+     * Used to get tab attributes
+     * @constant {string} @default
+     */
     const tabIDPre = "content-";
-
     /**
      * Window URL
      * @constant {URLSearchParams} @default

@@ -6,9 +6,9 @@
 {{- $dayIDFormat := print $monthIDFormat "-" "day-%d" -}}
 
 <!-- @TODO Fantasy-Calendar ONLY Site Options -->
-{{- $numMonths := 12 -}}
-{{- $numMonthdays := 30 -}}
-{{- $numWeekdays := 7 -}}
+{{- $numWeekdays := .Site.Params.Calendar.daysPerWeek | default 7 -}}
+{{- $numMonthdays := .Site.Params.Calendar.daysPerMonth | default 30 -}}
+{{- $numMonths := .Site.Params.Calendar.monthsPerYear | default 12 -}}
 
 {{- $activeMonths := dict -}}
 {{- range .Years }}

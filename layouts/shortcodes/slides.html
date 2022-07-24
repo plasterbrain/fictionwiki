@@ -1,0 +1,15 @@
+{{- if len .Inner -}}
+    {{- $height := cond .IsNamedParams (.Get "Height") (.Get 0) | default 400 -}}
+    {{- $height = printf "style='height:%dpx;'" $height -}}
+    <!-- SHORTCODE: Slideshow -->
+    {{- .Page.Store.Set "hasReveal" true -}}
+    <div role="presentation" class="reveal mb-4" {{ $height | safeHTMLAttr -}}>
+        <div role="presentation" class="slides">
+            <section data-markdown>
+                <textarea data-template>
+                    {{ .Inner }}
+                </textarea>
+            </section>
+        </div>
+    </div>
+{{- end -}}

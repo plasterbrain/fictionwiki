@@ -1,0 +1,10 @@
+{
+  "plugins": [
+    ["babel-plugin-prismjs", {
+          "languages": ["markup", "clike", "javascript", "gml", "javadoclike", "jsdoc", "markdown", "properties", "renpy", "toml", "typescript"],
+          "plugins": ["line-numbers", "highlight-keywords"],
+          "theme": "okaidia",
+          "css": true
+    }]
+  ]
+}

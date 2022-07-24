@@ -1,0 +1,5 @@
+{{- $js := print .Script ".js" -}}
+{{- $js = resources.Get (path.Join "js/" $js) -}}
+{{- if $js }}
+    <script src="{{- $js.RelPermalink -}}"></script>
+{{- end }}

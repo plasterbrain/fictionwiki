@@ -7,7 +7,7 @@
  *                |_|
  * @file    Embeds an Unsplash collection from an ID.
  * @author  plasterbrain
- * @license MIT <https://opensource.org/licenses/MIT>
+ * @license MIT-0 <https://opensource.org/licenses/MIT-0>
  * @version 1.0.0
  */
 import * as params from '@params';

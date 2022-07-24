@@ -2,7 +2,7 @@
     {{- .Content -}}
 	{{- if .File -}}
 		{{- $events := .RegularPages | union (where $.Site.RegularPages "Params.Subplots" "intersect" (slice .File.ContentBaseName)) -}}
-        {{ partial "page/timeline.html" (dict "CurrentPage" . "Events" $events) }}
+        {{ partial "page/timeline.html" (dict "Site" $.Site "CurrentPage" . "Events" $events) }}
 	{{- end -}}
 {{- end }}
 

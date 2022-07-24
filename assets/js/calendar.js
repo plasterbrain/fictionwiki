@@ -4,15 +4,23 @@
  * | |   / _` | |/ _ \ '_ \/ _` |/ _` | '__|
  * | |__| (_| | |  __/ || | (_| | (_| | |
  * \____\__,_|_|\___|_||_|\__,_|\__,_|_|
+ *
  * @file    Provides functionality for switching between timeline views.
  * @author  plasterbrain
- * @license MIT <https://opensource.org/licenses/MIT>
+ * @license MIT-0 <https://opensource.org/licenses/MIT-0>
  * @version 1.0.0
  */
 document.addEventListener("DOMContentLoaded", function (event) {
-
+    /**
+     * Tabs used to select calendar vs timeline view.
+     * @constant {Element[]} @default
+     */
     const $viewTabs = Array.prototype.slice.call(
         document.querySelectorAll("#tabs-timeline .tab"), 0);
+    /**
+     * Divs containing the different event views.
+     * @constant {Element[]} @default
+     */
     const $viewPanels = Array.prototype.slice.call(
         document.querySelectorAll("#page__timeline .tabpanel"), 0);
     /**
@@ -21,7 +29,15 @@ document.addEventListener("DOMContentLoaded", function (event) {
      */
     const $monthButtons = Array.prototype.slice.call(
         document.querySelectorAll(".button-month"), 0);
+    /**
+     * Class to give all the month buttons. Very cool variable
+     * @constant {string} @default
+     */
     const monthButtonClass = "button-month button p-1";
+    /**
+     * Class to give the currently selected month button.
+     * @constant {string} @default
+     */
     const monthButtonClassSelected = monthButtonClass + " has-text-primary is-selected";
     /**
      * Divs for each month within the currently selected year.

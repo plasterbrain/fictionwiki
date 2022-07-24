@@ -1,7 +1,7 @@
 ---
-title: {{ replace .Name "-" " " | title }}
+title: {{ (replaceRE "([^-]*)(?:-?)(.*)" "$2-$1" .Name) | humanize | title }}
 #linkTitle: ""
-#slug: ""       # Last part of the URL
+slug: {{ (replaceRE "([^-]*)(?:-?)(.*)" "$2-$1" .Name) | urlize }}
 description: "" # Page subtitle
 categories: []
 tags: []        # Use tags for "wiki maintenance" categories
@@ -27,8 +27,8 @@ color: ""
 food: ""
 sport: ""
 ---
-{{< infobox/character >}}
-<!-- KEEP THIS EMPTY LINE -->
+{{< infobox "character" >}}
+
 **{{ replace .Name "-" " " | title }}**
 
 ## Appearance

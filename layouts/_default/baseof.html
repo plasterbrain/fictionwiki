@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html id="document" lang="{{- $.Site.Language.Lang -}}" data-rtl='{{ eq .Site.Language.LanguageDirection "rtl" }}'>
 <head>
-	<title>{{ .Title }}</title>
-	{{- partialCached "head/meta-site.html" . -}}
-	{{- partialCached "head/meta-prism.html" . -}}
+	<title>{{- .Title }} | {{ $.Site.Title -}}</title>
+	{{- partialCached "head/meta-site.html" . "css" -}}
+	{{- partialCached "head/meta-styles-plugin.html" . -}}
 </head>
 <body class="is-flex is-flex-direction-column darkmode--activated">
 	<div role="presentation" class="columns is-multiline is-flex-grow-1">
@@ -11,6 +11,7 @@
 			{{/* LEFT SIDEBAR */}}
 			{{- block "sidebar1" . -}}
 				{{- partial "header/title.html" . -}}
+				{{- partial "sidebar/search.html" . -}}
 				{{- partial "sidebar/nav-site.html" . -}}
 			{{- end -}}
 		</aside>
@@ -19,16 +20,26 @@
 			{{- partial "page/nav-breadcrumbs.html" . -}}
 			{{/* RESOURCES: Where extra page tab content is stored */}}
 			{{- block "resources" . -}}
-				{{- .Page.Store.Set "hasResources" (where .Resources "ResourceType" "page") -}}
+				{{- $folder := .Site.Params.storyTabFolder | default "tabs" -}}
+				{{- if eq .Kind "page" -}}
+					{{- .Page.Store.Set "hasResources" (.Resources.Match (print $folder "/*.md")) -}}
+				{{- else -}}
+					{{- $resources := .GetPage (print .RelPermalink $folder) -}}
+					{{- .Page.Store.Set "hasResources" ($resources.Resources.ByType "page") -}}
+				{{- end -}}
 			{{- end -}}
 			{{/* /RESOURCES */}}
 			<main id="main" class="content mt-3">
 			<article aria-labelledby="page__title">
 				<header class="mb-5">
-					<h1 id="page__title" class="title">{{- .Title -}}</h1>
-					{{- with .Description }}
-						<p class="subtitle is-size-5">{{- . | markdownify -}}</p>
+					{{/* HEADER: Page title/adjacent nav */}}
+					{{- block "header" . }}
+						<h1 id="page__title" class="title">{{- .Title -}}</h1>
+						{{- with .Description }}
+							<p class="subtitle is-size-5">{{- . | markdownify -}}</p>
+						{{- end }}
 					{{- end }}
+					{{/* /HEADER */}}
 				</header>
 				{{- with (.Page.Store.Get "hasResources") }}
 					{{- partial "page/nav-resources.html" . -}}
@@ -46,9 +57,8 @@
 						{{- .Content }}
 					{{- end }}
 					{{/* /MAIN */}}
-
 					<footer>
-						{{/* SUBPAGES: Main page content */}}
+						{{/* SUBPAGES: Related pages/children nav */}}
 						{{- block "subpages" . }}
 							{{- partial "page/nav-subpages.html" . -}}
 						{{- end }}
@@ -56,26 +66,34 @@
 					</footer>
 				</div>
 				{{- range .Page.Store.Get "hasResources" }}
-					{{- $title := .LinkTitle | urlize -}}
+					{{- $title := "" -}}
+					{{- with .File -}}
+						{{- $title = .TranslationBaseName -}}
+					{{- end -}}
+					{{- $linkTitle := .LinkTitle | urlize -}}
+					{{- if ne $title $linkTitle -}}
+						{{- $title = $linkTitle -}}
+					{{- end -}}
 					<div role="tabpanel"
 						 id="content-{{- $title -}}"
 						 data-toc="toc-{{- $title -}}"
 						 aria-labelledby="{{- $title -}}__title"
 						 class="tab__content" style="display:none;">
-						<h2 id="{{- $title -}}__title">{{ .Title }}</h2>
+						<h2 class="is-size-3" id="{{- $title -}}__title">
+							{{- .Title | markdownify -}}
+						</h2>
 						{{- with .Description -}}
-							<p class="is-size-5">{{- . -}}</p>
+							<p class="is-size-5">{{- . | markdownify -}}</p>
 						{{- end -}}
-						{{- .Content }}
+						{{- .Content | safeHTML }}
 					</div>
 				{{- end }}
 			</article>
 			</main>
 		</div>
 		<aside class="column is-one-fifth-widescreen is-one-third-tablet">
-			<div role="presentation" class="is-hidden-touch is-hidden-desktop-only mb-3">
-				{{- partialCached "sidebar/pagecount.html" . -}}
-			</div>
+			<!--<div role="presentation" class="is-hidden-touch is-hidden-desktop-only mb-3">
+			</div>-->
 			{{- partial "sidebar/button-edit.html" . -}}
 			{{- partial "sidebar/button-print.html" . -}}
 			{{- if (.Site.Params.debug | default false) }}
@@ -98,5 +116,4 @@
 		{{- partial "footer/scripts.html" . -}}
 	{{- end }}
 </body>
-
 </html>
